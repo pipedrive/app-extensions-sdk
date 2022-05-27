@@ -157,7 +157,7 @@ const { token } = await sdk.execute(Command.GET_SIGNED_TOKEN);
 
 ### Open modal
 
-Opens an [JSON modal](#json-modal), [custom modal](#custom-modal) or a new
+Opens a [JSON modal](#json-modal), [custom modal](#custom-modal) or a new
 Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal)
 or [Person](#new-person-modal) modal
 
@@ -303,7 +303,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 
 ### Close modal
 
-Closes an active modal window; applicable only for custom modal.
+Closes an active modal window; applicable only for **custom modal**.
 
 **Example**
 
