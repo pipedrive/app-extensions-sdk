@@ -1,8 +1,21 @@
 import typescript from '@rollup/plugin-typescript';
-import pkg from './package.json';
 
 export default {
 	input: 'src/index.ts',
-	output: [{ file: pkg.main, format: 'cjs', sourcemap: true, exports: 'named' }],
-	plugins: [typescript()],
+	output: [
+		{
+			file: 'dist/index.js',
+			format: 'cjs',
+			sourcemap: true,
+			exports: 'named',
+		},
+		{
+			file: 'dist/index.umd.js',
+			format: 'umd',
+			sourcemap: true,
+			exports: 'named',
+			name: 'AppExtensionsSdk',
+		},
+	],
+	plugins: [typescript({ tsconfig: './tsconfig.json' })],
 };

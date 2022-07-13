@@ -15,7 +15,7 @@
     "test": "jest --passWithNoTests",
     "coverage": "npm test -- --coverage",
     "prepublish": "npm run build",
-    "build": "tsc -p .",
+    "build": "rollup -c",
     "lint:eslint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "lint:tsc": "tsc --noEmit",
     "lint": "npm run lint:tsc && npm run lint:eslint",
