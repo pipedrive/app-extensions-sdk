@@ -1,4 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
+import { terser } from 'rollup-plugin-terser';
 
 export default [
 	{
@@ -22,6 +23,7 @@ export default [
 				sourcemap: true,
 				exports: 'default',
 				name: 'AppExtensionsSdk',
+				plugins: [terser()],
 			},
 		],
 		plugins: [typescript({ tsconfig: './tsconfig.json' })],
