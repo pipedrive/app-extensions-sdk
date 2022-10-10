@@ -16,6 +16,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Get signed token](#get-signed-token)
   - [Open modal](#open-modal)
   - [Close modal](#close-modal)
+  - [Redirect to](#redirect-to)
 - [Events](#events)
   - [Custom panel visibility](#custom-panel-visibility)
   - [Close custom modal](#close-custom-modal)
@@ -309,6 +310,23 @@ Closes an active modal window; applicable only for **custom modal**.
 
 ```javascript
 await sdk.execute(Command.CLOSE_MODAL);
+```
+
+### Redirect to
+
+Redirects user to specified view.
+
+**Parameters**
+
+| Parameter  | Type          | Description                                                                                                          | Notes                                                                                                                                                                                                |
+|------------|---------------|----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| view       | View          | View where the user will be redirected to                                                                            | required<br/><br/>Supported views:<br/>View.DEALS<br/>View.LEADS<br/>View.ORGANIZATIONS<br/>View.CONTACTS<br/>View.CAMPAIGNS<br/>View.PROJECTS<br/>View.SETTINGS - redirects to custom settings page |
+| id         | String/Number | Id of the entity where the user will be redirected to. If not provided, user will be redirected to list view instead | optional                                                                                                                                                                                             |
+
+**Example**
+
+```javascript
+await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1 });
 ```
 
 ## Events
