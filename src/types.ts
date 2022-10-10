@@ -180,4 +180,4 @@ export enum View {
 export type RedirectAttributes = {
 	view: View;
 	id?: number | string;
-}
+};
