@@ -11,6 +11,7 @@ export enum Command {
 	OPEN_MODAL = 'open_modal',
 	CLOSE_MODAL = 'close_modal',
 	GET_SIGNED_TOKEN = 'get_signed_token',
+	REDIRECT_TO = 'redirect_to',
 }
 
 export enum Event {
@@ -122,12 +123,14 @@ export type Args<T extends Command> = {
 	[Command.OPEN_MODAL]: ModalAttributes;
 	[Command.CLOSE_MODAL]: void;
 	[Command.GET_SIGNED_TOKEN]: void;
+	[Command.REDIRECT_TO]: RedirectAttributes;
 }[T];
 
 export type CommandResponse<T extends Command> = {
 	[Command.SHOW_SNACKBAR]: void;
 	[Command.INITIALIZE]: void;
 	[Command.RESIZE]: void;
+	[Command.REDIRECT_TO]: void;
 	[Command.SHOW_CONFIRMATION]: {
 		confirmed: boolean;
 	};
@@ -163,3 +166,18 @@ export type Payload<T extends Command> = {
 };
 
 export type ExecuteCommandArgs<T extends Command> = Args<T> extends void ? [] : [Args<T>];
+
+export enum View {
+	DEALS = 'deals',
+	LEADS = 'leads',
+	ORGANIZATIONS = 'organizations',
+	CONTACTS = 'contacts',
+	CAMPAIGNS = 'campaigns',
+	PROJECTS = 'projects',
+	SETTINGS = 'settings',
+}
+
+export type RedirectAttributes = {
+	view: View;
+	id?: number | string;
+};
