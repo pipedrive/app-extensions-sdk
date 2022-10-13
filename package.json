@@ -22,8 +22,7 @@
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,yml}' && eslint --fix '**/*.{js,jsx,ts,tsx}'",
     "version": "changelog-updater && git add CHANGELOG.md",
     "watch": "rollup --watch -c",
-    "watch:sync": "npm-utils watch",
-    "prepare": "husky install && npm run build"
+    "watch:sync": "npm-utils watch"
   },
   "repository": {
     "type": "git",
