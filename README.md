@@ -329,6 +329,36 @@ Redirects user to specified view.
 await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1 });
 ```
 
+### Show floating window
+
+Coming...
+
+**Example**
+
+```javascript
+await sdk.execute(Command.SHOW_FLOATING_WINDOW);
+```
+
+### Hide floating window
+
+Coming...
+
+**Example**
+
+```javascript
+await sdk.execute(Command.HIDE_FLOATING_WINDOW);
+```
+
+### Minimize floating window
+
+Coming...
+
+**Example**
+
+```javascript
+await sdk.execute(Command.MINIMIZE_FLOATING_WINDOW);
+```
+
 ## Events
 
 Subscribe to events triggered by user.
@@ -372,6 +402,60 @@ Subscribe to custom modal events that are triggered by this SDK's `CLOSE_MODAL` 
 
 ```javascript
 sdk.listen(Event.CLOSE_CUSTOM_MODAL, () => {
+  // handle event
+});
+```
+
+### Show floating window
+
+Coming...
+
+**Response**
+
+| Parameter | Type   | Description                                             | Notes |
+|-----------|--------|---------------------------------------------------------|-------|
+| invoker   | String | Describes if event was triggered by SDK command or user |       |
+
+**Example**
+
+```javascript
+sdk.listen(Event.SHOW_FLOATING_WINDOW, ({ error, data }) => {
+  // handle event
+});
+```
+
+### Hide floating window
+
+Coming...
+
+**Response**
+
+| Parameter | Type   | Description                                             | Notes |
+|-----------|--------|---------------------------------------------------------|-------|
+| invoker   | String | Describes if event was triggered by SDK command or user |       |
+
+**Example**
+
+```javascript
+sdk.listen(Event.HIDE_FLOATING_WINDOW, ({ error, data }) => {
+  // handle event
+});
+```
+
+### Minimize floating window
+
+Coming...
+
+**Response**
+
+| Parameter | Type   | Description                                             | Notes |
+|-----------|--------|---------------------------------------------------------|-------|
+| invoker   | String | Describes if event was triggered by SDK command or user |       |
+
+**Example**
+
+```javascript
+sdk.listen(Event.MINIMIZE_FLOATING_WINDOW, ({ error, data }) => {
   // handle event
 });
 ```
