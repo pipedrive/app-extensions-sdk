@@ -18,8 +18,9 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Close modal](#close-modal)
   - [Redirect to](#redirect-to)
 - [Events](#events)
-  - [Custom panel visibility](#custom-panel-visibility)
+  - [Change visibility](#change-visibility)
   - [Close custom modal](#close-custom-modal)
+  - [Minimize floating window](#minimize-floating-window)
 
 ## Initialization
 
@@ -372,17 +373,20 @@ const stopReceivingEvents = sdk.listen(event, ({ error, data }) => {
 stopReceivingEvents(); // Call this function to stop receiving events
 ```
 
-### Custom panel visibility
+### Change visibility
 
-Subscribe to custom panel visibility changes that are triggered by the user.
+Subscribe to visibility changes that are triggered by the user or SDK command.
 
 **Custom panel** - user collapses or expands the panel
 
+**Floating window** - user (or SDK command) opens or closes the floating window
+
 **Response**
 
-| Parameter  | Type    | Description                      | Notes |
-|------------|---------|----------------------------------|-------|
-| is_visible | Boolean | Is the extension visible to user |       |
+| Parameter  | Type    | Description                                             | Notes |
+|------------|---------|---------------------------------------------------------|-------|
+| is_visible | Boolean | Is the extension visible to user                        |       |
+| invoker    | String  | Describes if event was triggered by SDK command or user |       |
 
 **Example**
 
@@ -406,45 +410,9 @@ sdk.listen(Event.CLOSE_CUSTOM_MODAL, () => {
 });
 ```
 
-### Show floating window
-
-Coming...
-
-**Response**
-
-| Parameter | Type   | Description                                             | Notes |
-|-----------|--------|---------------------------------------------------------|-------|
-| invoker   | String | Describes if event was triggered by SDK command or user |       |
-
-**Example**
-
-```javascript
-sdk.listen(Event.SHOW_FLOATING_WINDOW, ({ error, data }) => {
-  // handle event
-});
-```
-
-### Hide floating window
-
-Coming...
-
-**Response**
-
-| Parameter | Type   | Description                                             | Notes |
-|-----------|--------|---------------------------------------------------------|-------|
-| invoker   | String | Describes if event was triggered by SDK command or user |       |
-
-**Example**
-
-```javascript
-sdk.listen(Event.HIDE_FLOATING_WINDOW, ({ error, data }) => {
-  // handle event
-});
-```
-
 ### Minimize floating window
 
-Coming...
+Subscribe to event when user (or SDK command) minimizes the floating window.
 
 **Response**
 
