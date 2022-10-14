@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+- New type `ACTIVITY` for `OPEN_MODAL` command
+
 ## [0.2.0] - 2022-10-13
 
 - New `REDIRECT_TO` command
