@@ -159,8 +159,8 @@ const { token } = await sdk.execute(Command.GET_SIGNED_TOKEN);
 ### Open modal
 
 Opens a [JSON modal](#json-modal), [custom modal](#custom-modal) or a new
-Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal)
-or [Person](#new-person-modal) modal
+Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal), [Person](#new-person-modal)
+or [Activity](#new-activity-modal) modal
 
 ### JSON modal action
 
@@ -306,18 +306,18 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 
 **Parameters for new activity modal**
 
-| Parameter            | Type   | Description                                                                       | Notes    |
-|----------------------|--------|-----------------------------------------------------------------------------------|----------|
-| type                 | Modal  |                                                                                   | required |
-| prefill              | Object | Object to prefill some new activity modal fields                                  | optional |
-| prefill.subject      | String | Activity subject                                                                  | optional |
-| prefill.dueDate      | String | Activity due date in yyyy-MM-dd format (UTC)                                      | optional |
-| prefill.dueTime      | String | Activity due time in HH:mm format                                                 | optional |
-| prefill.duration     | String | Activity duration in HH:mm format                                                 | optional |
-| prefill.note         | String | Note, supports formatting with HTML `ul, li, b, u, i` tags                        | optional |
-| prefill.description  | String | Activity public description, supports formatting with HTML `ul, li, b, u, i` tags | optional |
-| prefill.deal         | Number | Deal id that will be connected to the activity                                    | optional |
-| prefill.organization | Number | Organization id that will be connected to the activity                            | optional |
+| Parameter            | Type   | Description                                                                | Notes    |
+|----------------------|--------|----------------------------------------------------------------------------|----------|
+| type                 | Modal  |                                                                            | required |
+| prefill              | Object | Object to prefill some new activity modal fields                           | optional |
+| prefill.subject      | String | Activity subject                                                           | optional |
+| prefill.dueDate      | String | Activity due date in yyyy-MM-dd format (UTC)                               | optional |
+| prefill.dueTime      | String | Activity due time in HH:mm format                                          | optional |
+| prefill.duration     | String | Activity duration in HH:mm format                                          | optional |
+| prefill.note         | String | Note, supports formatting with HTML `ul, li, b, u, i` tags                 | optional |
+| prefill.description  | String | Activity description, supports formatting with HTML `ul, li, b, u, i` tags | optional |
+| prefill.deal         | Number | Deal id that will be connected to the activity                             | optional |
+| prefill.organization | Number | Organization id that will be connected to the activity                     | optional |
 
 **Response**
 
