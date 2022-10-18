@@ -53,6 +53,7 @@ export enum Modal {
 	DEAL = 'deal',
 	ORGANIZATION = 'organization',
 	PERSON = 'person',
+	ACTIVITY = 'activity',
 	JSON_MODAL = 'json_modal',
 	CUSTOM_MODAL = 'custom_modal',
 }
@@ -81,6 +82,20 @@ export type OrganizationModalAttributes = {
 	};
 };
 
+export type ActivityModalAttributes = {
+	type: Modal.ACTIVITY;
+	prefill?: {
+		subject?: string;
+		dueDate?: string;
+		dueTime?: string;
+		duration?: string;
+		note?: string;
+		description?: string;
+		deal?: number;
+		organization?: number;
+	};
+};
+
 export type JSONModalAttributes = {
 	type: Modal.JSON_MODAL;
 	action_id: string;
@@ -98,6 +113,7 @@ export type ModalAttributes =
 	| OrganizationModalAttributes
 	| DealModalAttributes
 	| PersonModalAttributes
+	| ActivityModalAttributes
 	| JSONModalAttributes
 	| CustomModalAttributes;
 
