@@ -18,8 +18,6 @@ export declare enum Command {
 export declare enum Event {
     VISIBILITY = "visibility",
     CLOSE_CUSTOM_MODAL = "close_custom_modal",
-    SHOW_FLOATING_WINDOW = "show_floating_window",
-    HIDE_FLOATING_WINDOW = "hide_floating_window",
     MINIMIZE_FLOATING_WINDOW = "minimize_floating_window"
 }
 export declare enum MessageType {
@@ -47,6 +45,7 @@ export declare enum Modal {
     DEAL = "deal",
     ORGANIZATION = "organization",
     PERSON = "person",
+    ACTIVITY = "activity",
     JSON_MODAL = "json_modal",
     CUSTOM_MODAL = "custom_modal"
 }
@@ -71,6 +70,19 @@ export declare type OrganizationModalAttributes = {
         name?: string;
     };
 };
+export declare type ActivityModalAttributes = {
+    type: Modal.ACTIVITY;
+    prefill?: {
+        subject?: string;
+        dueDate?: string;
+        dueTime?: string;
+        duration?: string;
+        note?: string;
+        description?: string;
+        deal?: number;
+        organization?: number;
+    };
+};
 export declare type JSONModalAttributes = {
     type: Modal.JSON_MODAL;
     action_id: string;
@@ -82,7 +94,7 @@ export declare type CustomModalAttributes = {
         [key: string]: string;
     };
 };
-export declare type ModalAttributes = OrganizationModalAttributes | DealModalAttributes | PersonModalAttributes | JSONModalAttributes | CustomModalAttributes;
+export declare type ModalAttributes = OrganizationModalAttributes | DealModalAttributes | PersonModalAttributes | ActivityModalAttributes | JSONModalAttributes | CustomModalAttributes;
 export declare enum ModalStatus {
     CLOSED = "closed",
     SUBMITTED = "submitted"
@@ -90,13 +102,10 @@ export declare enum ModalStatus {
 export declare enum TrackingEvent {
     FOCUSED = "focused"
 }
-export declare enum FloatingWindowEventInvoker {
+export declare enum VisibilityEventInvoker {
     USER = "user",
     COMMAND = "command"
 }
-export declare type FloatingWindowEventAttributes = {
-    invoker: FloatingWindowEventInvoker;
-};
 export declare type Args<T extends Command> = {
     [Command.INITIALIZE]: InitializationOptions;
     [Command.SHOW_SNACKBAR]: {
@@ -148,11 +157,12 @@ export declare type EventResponse<T extends Event> = {
     data?: {
         [Event.VISIBILITY]: {
             is_visible: boolean;
+            context?: Partial<Record<string, unknown> & Record<'invoker', VisibilityEventInvoker>>;
         };
         [Event.CLOSE_CUSTOM_MODAL]: void;
-        [Event.SHOW_FLOATING_WINDOW]: FloatingWindowEventAttributes;
-        [Event.HIDE_FLOATING_WINDOW]: FloatingWindowEventAttributes;
-        [Event.MINIMIZE_FLOATING_WINDOW]: FloatingWindowEventAttributes;
+        [Event.MINIMIZE_FLOATING_WINDOW]: {
+            context: Record<'invoker', VisibilityEventInvoker>;
+        };
     }[T];
 };
 export declare type Payload<T extends Command> = {

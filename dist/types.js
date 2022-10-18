@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.View = exports.FloatingWindowEventInvoker = exports.TrackingEvent = exports.ModalStatus = exports.Modal = exports.Color = exports.MessageType = exports.Event = exports.Command = void 0;
+exports.View = exports.VisibilityEventInvoker = exports.TrackingEvent = exports.ModalStatus = exports.Modal = exports.Color = exports.MessageType = exports.Event = exports.Command = void 0;
 var Command;
 (function (Command) {
     Command["SHOW_SNACKBAR"] = "show_snackbar";
@@ -19,8 +19,6 @@ var Event;
 (function (Event) {
     Event["VISIBILITY"] = "visibility";
     Event["CLOSE_CUSTOM_MODAL"] = "close_custom_modal";
-    Event["SHOW_FLOATING_WINDOW"] = "show_floating_window";
-    Event["HIDE_FLOATING_WINDOW"] = "hide_floating_window";
     Event["MINIMIZE_FLOATING_WINDOW"] = "minimize_floating_window";
 })(Event = exports.Event || (exports.Event = {}));
 var MessageType;
@@ -40,6 +38,7 @@ var Modal;
     Modal["DEAL"] = "deal";
     Modal["ORGANIZATION"] = "organization";
     Modal["PERSON"] = "person";
+    Modal["ACTIVITY"] = "activity";
     Modal["JSON_MODAL"] = "json_modal";
     Modal["CUSTOM_MODAL"] = "custom_modal";
 })(Modal = exports.Modal || (exports.Modal = {}));
@@ -52,11 +51,11 @@ var TrackingEvent;
 (function (TrackingEvent) {
     TrackingEvent["FOCUSED"] = "focused";
 })(TrackingEvent = exports.TrackingEvent || (exports.TrackingEvent = {}));
-var FloatingWindowEventInvoker;
-(function (FloatingWindowEventInvoker) {
-    FloatingWindowEventInvoker["USER"] = "user";
-    FloatingWindowEventInvoker["COMMAND"] = "command";
-})(FloatingWindowEventInvoker = exports.FloatingWindowEventInvoker || (exports.FloatingWindowEventInvoker = {}));
+var VisibilityEventInvoker;
+(function (VisibilityEventInvoker) {
+    VisibilityEventInvoker["USER"] = "user";
+    VisibilityEventInvoker["COMMAND"] = "command";
+})(VisibilityEventInvoker = exports.VisibilityEventInvoker || (exports.VisibilityEventInvoker = {}));
 var View;
 (function (View) {
     View["DEALS"] = "deals";

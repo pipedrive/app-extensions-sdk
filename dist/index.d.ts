@@ -1,4 +1,4 @@
-import { Options, Command, Event, CommandResponse, EventResponse, ExecuteCommandArgs, InitializationOptions } from './types';
+import { Command, CommandResponse, Event, EventResponse, ExecuteCommandArgs, InitializationOptions, Options } from './types';
 declare class AppExtensionsSDK {
     private readonly identifier;
     private initialized;
