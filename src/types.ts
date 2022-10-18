@@ -20,8 +20,6 @@ export enum Command {
 export enum Event {
 	VISIBILITY = 'visibility',
 	CLOSE_CUSTOM_MODAL = 'close_custom_modal',
-	SHOW_FLOATING_WINDOW = 'show_floating_window',
-	HIDE_FLOATING_WINDOW = 'hide_floating_window',
 	MINIMIZE_FLOATING_WINDOW = 'minimize_floating_window',
 }
 
@@ -112,14 +110,10 @@ export enum TrackingEvent {
 	FOCUSED = 'focused',
 }
 
-export enum FloatingWindowEventInvoker {
+export enum VisibilityEventInvoker {
 	USER = 'user',
 	COMMAND = 'command',
 }
-
-export type FloatingWindowEventAttributes = {
-	invoker: FloatingWindowEventInvoker;
-};
 
 export type Args<T extends Command> = {
 	[Command.INITIALIZE]: InitializationOptions;
@@ -175,11 +169,12 @@ export type EventResponse<T extends Event> = {
 	data?: {
 		[Event.VISIBILITY]: {
 			is_visible: boolean;
+			context?: Partial<Record<string, unknown> & Record<'invoker', VisibilityEventInvoker>>;
 		};
 		[Event.CLOSE_CUSTOM_MODAL]: void;
-		[Event.SHOW_FLOATING_WINDOW]: FloatingWindowEventAttributes;
-		[Event.HIDE_FLOATING_WINDOW]: FloatingWindowEventAttributes;
-		[Event.MINIMIZE_FLOATING_WINDOW]: FloatingWindowEventAttributes;
+		[Event.MINIMIZE_FLOATING_WINDOW]: {
+			context: Record<'invoker', VisibilityEventInvoker>;
+		};
 	}[T];
 };
 
