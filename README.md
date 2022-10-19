@@ -18,7 +18,8 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Close modal](#close-modal)
   - [Redirect to](#redirect-to)
   - [Show floating window](#show-floating-window)
-  - [Hide floating window](#minimize-floating-window)
+  - [Hide floating window](#hide-floating-window)
+  - [Minimize floating window](#minimize-floating-window)
 - [Events](#events)
   - [Change visibility](#change-visibility)
   - [Close custom modal](#close-custom-modal)
@@ -27,8 +28,10 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
 ## Initialization
 
 In order to display a custom UI extension to a user, this SDK has to be initialized.
-In the iframe request, query id attribute is passed, which has to be provided to the SDK constructor.
-The SDK will try to read it from the URL query. If the URL is modified (e.g. with redirects), then it has to be passed manually.
+In the iframe request, query id attribute is passed, which has to be provided to the SDK
+constructor.
+The SDK will try to read it from the URL query. If the URL is modified (e.g. with redirects), then
+it has to be passed manually.
 
 ```javascript
 import AppExtensionsSDK from '@pipedrive/app-extensions-sdk';
@@ -121,7 +124,8 @@ Resizes custom UI extension with provided height and width
 
 **Custom panel** - only height can be changed and the value must be between 100px and 750px.
 
-**Custom modal** - both height and width can be changed. The minimum height is 120px and the minimum width is 320px . The maximum height and width are
+**Custom modal** - both height and width can be changed. The minimum height is 120px and the minimum
+width is 320px . The maximum height and width are
 limited to the user's browser dimensions.
 
 **Parameters**
@@ -140,10 +144,12 @@ await sdk.execute(Command.RESIZE, { height: 500 });
 ### Get signed token
 
 A new JSON Web Token (JWT) that is valid for 5 minutes will be generated. It can be verified using
-the JWT secret which you can add from Marketplace Manager when configuring a custom UI extension. If it’s not
+the JWT secret which you can add from Marketplace Manager when configuring a custom UI extension. If
+it’s not
 specified, use app’s client secret instead. JWT contains Pipedrive user and company ids.
 
-JWT can be used to assure that the custom UI extension is loaded by Pipedrive. It can be passed to your API
+JWT can be used to assure that the custom UI extension is loaded by Pipedrive. It can be passed to
+your API
 requests and be verified on the server side. Note that JWT expires in 5 minutes so use this command
 to get a new one.
 
@@ -162,7 +168,8 @@ const { token } = await sdk.execute(Command.GET_SIGNED_TOKEN);
 ### Open modal
 
 Opens a [JSON modal](#json-modal), [custom modal](#custom-modal) or a new
-Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal), [Person](#new-person-modal)
+Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal)
+, [Person](#new-person-modal)
 or [Activity](#new-activity-modal) modal
 
 ### JSON modal action
@@ -376,38 +383,66 @@ await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1 });
 
 ### Show floating window
 
-Opens floating window and triggers `VISIBILITY` event with `context` object properties
+Opens floating window and triggers `Event.VISIBILITY` with `context` parameter that may be filled in
+and then read by event handler (see [Change visibility](#change-visibility) for details).
 
 **Parameters**
 
 | Parameter | Type   | Description                                       | Notes    |
 |-----------|--------|---------------------------------------------------|----------|
-| context   | Object | Object to be passed as JSON to `VISIBILITY` event | optional |
-
-**Response**
-
-| Parameter | Type   | Description                                | Notes |
-|-----------|--------|--------------------------------------------|-------|
-| status    | String | Indicates if modal was submitted or closed |       |
+| context   | Object | Object to be passed as JSON to event handler | optional |
 
 **Example**
 
 ```javascript
 await sdk.execute(Command.SHOW_FLOATING_WINDOW, {
   context: {
-    item: 'xyz'
+    person_id: 42
   }
 });
 ```
 
 ### Hide floating window
 
-Coming...
+Closes floating window and triggers `Event.VISIBILITY` with `context` parameter that may be filled
+in and then read by event handler (see [Change visibility](#change-visibility) for details).
+
+**Parameters**
+
+| Parameter | Type   | Description                                       | Notes    |
+|-----------|--------|---------------------------------------------------|----------|
+| context   | Object | Object to be passed as JSON to event handler | optional |
 
 **Example**
 
 ```javascript
-await sdk.execute(Command.HIDE_FLOATING_WINDOW);
+await sdk.execute(Command.HIDE_FLOATING_WINDOW, {
+  context: {
+    person_id: 42
+  }
+});
+```
+
+### Minimize floating window
+
+Minimizes floating window and triggers `Event.MINIMIZE_FLOATING_WINDOW` with `context` parameter
+that may be filled in and then read by event handler (see [Change visibility](#change-visibility)
+for details).
+
+**Parameters**
+
+| Parameter | Type   | Description                                  | Notes    |
+|-----------|--------|----------------------------------------------|----------|
+| context   | Object | Object to be passed as JSON to event handler | optional |
+
+**Example**
+
+```javascript
+await sdk.execute(Command.MINIMIZE_FLOATING_WINDOW, {
+  context: {
+    is_active: true
+  }
+});
 ```
 
 ## Events
@@ -427,17 +462,26 @@ stopReceivingEvents(); // Call this function to stop receiving events
 
 Subscribe to visibility changes that are triggered by the user or SDK command.
 
-**Custom panel** - user collapses or expands the panel
+#### Custom panel
 
-**Floating window** - user (or SDK command) opens or closes the floating window
+Event is triggered when user collapses or expands the panel
+
+`context` parameter is not included.
+
+#### Floating window
+
+Event is triggered when floating window is displayed or gets hidden for user.
+
+`context` property may consist of data passed from command and will always contain `invoker` with
+possible values `command` or `user`.
 
 **Response**
 
-| Parameter       | Type    | Description                                             | Notes |
-|-----------------|---------|---------------------------------------------------------|-------|
-| is_visible      | Boolean | Is the extension visible to user                        |       |
-| context         | Object  | Contains properties specific to surface                 |       |
-| context.invoker | String  | Describes if event was triggered by SDK command or user |       |
+| Parameter       | Type    | Description                                             | Notes    |
+|-----------------|---------|---------------------------------------------------------|----------|
+| is_visible      | Boolean | Is the extension visible to user                        | required |
+| context         | Object  | Contains properties specific to surface                 | optional |
+| context.invoker | String  | Describes if event was triggered by SDK command or user |          |
 
 **Example**
 
@@ -449,7 +493,8 @@ sdk.listen(Event.VISIBILITY, ({ error, data }) => {
 
 ### Close custom modal
 
-Subscribe to custom modal events that are triggered by this SDK's `CLOSE_MODAL` command or user interaction with the custom modal.
+Subscribe to custom modal events that are triggered by this SDK's `CLOSE_MODAL` command or user
+interaction with the custom modal.
 
 **Custom panel** - user closes the custom modal
 
@@ -465,10 +510,22 @@ sdk.listen(Event.CLOSE_CUSTOM_MODAL, () => {
 
 Subscribe to event when user minimizes the floating window.
 
+`context` parameter may consist of data passed from `MINIMIZE_FLOATING_WINDOW` command and will
+always contain `invoker` with possible values `command` or `user`.
+
+**Response**
+
+| Parameter       | Type    | Description                                             | Notes |
+|-----------------|---------|---------------------------------------------------------|-------|
+| context         | Object  | Contains properties specific to surface                 |       |
+| context.invoker | String  | Describes if event was triggered by SDK command or user |       |
+
 **Example**
 
 ```javascript
-sdk.listen(Event.MINIMIZE_FLOATING_WINDOW, () => {
-  // handle event
+sdk.listen(Event.MINIMIZE_FLOATING_WINDOW, ({ data, error }) => {
+  if (data.context.invoker === VisibilityEventInvoker.COMMAND) {
+    doSomething(data.context.is_active);
+  }
 });
 ```

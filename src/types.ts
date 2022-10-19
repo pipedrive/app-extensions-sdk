@@ -149,9 +149,15 @@ export type Args<T extends Command> = {
 	[Command.CLOSE_MODAL]: void;
 	[Command.GET_SIGNED_TOKEN]: void;
 	[Command.REDIRECT_TO]: RedirectAttributes;
-	[Command.SHOW_FLOATING_WINDOW]: void;
-	[Command.HIDE_FLOATING_WINDOW]: void;
-	[Command.MINIMIZE_FLOATING_WINDOW]: void;
+	[Command.SHOW_FLOATING_WINDOW]: {
+		context?: Partial<Record<string, unknown>>;
+	};
+	[Command.HIDE_FLOATING_WINDOW]: {
+		context?: Partial<Record<string, unknown>>;
+	};
+	[Command.MINIMIZE_FLOATING_WINDOW]: {
+		context?: Partial<Record<string, unknown>>;
+	};
 }[T];
 
 export type CommandResponse<T extends Command> = {
