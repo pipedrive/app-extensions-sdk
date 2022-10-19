@@ -137,6 +137,16 @@ class AppExtensionsSDK {
 	}
 }
 
-export { Command, Event, Modal, ModalStatus, Color, TrackingEvent, MessageType, View } from './types';
+export {
+	Command,
+	Event,
+	Modal,
+	ModalStatus,
+	Color,
+	TrackingEvent,
+	MessageType,
+	View,
+	VisibilityEventInvoker,
+} from './types';
 
 export default AppExtensionsSDK;
