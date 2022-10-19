@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.View = exports.MessageType = exports.TrackingEvent = exports.Color = exports.ModalStatus = exports.Modal = exports.Event = exports.Command = void 0;
+exports.VisibilityEventInvoker = exports.View = exports.MessageType = exports.TrackingEvent = exports.Color = exports.ModalStatus = exports.Modal = exports.Event = exports.Command = void 0;
 const utils_1 = require("./utils");
 const types_1 = require("./types");
 const commandKeys = Object.values(types_1.Command);
@@ -117,4 +117,5 @@ Object.defineProperty(exports, "Color", { enumerable: true, get: function () { r
 Object.defineProperty(exports, "TrackingEvent", { enumerable: true, get: function () { return types_2.TrackingEvent; } });
 Object.defineProperty(exports, "MessageType", { enumerable: true, get: function () { return types_2.MessageType; } });
 Object.defineProperty(exports, "View", { enumerable: true, get: function () { return types_2.View; } });
+Object.defineProperty(exports, "VisibilityEventInvoker", { enumerable: true, get: function () { return types_2.VisibilityEventInvoker; } });
 exports.default = AppExtensionsSDK;

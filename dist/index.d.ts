@@ -11,5 +11,5 @@ declare class AppExtensionsSDK {
     setWindow(window: Window): void;
     initialize(options?: InitializationOptions): Promise<this>;
 }
-export { Command, Event, Modal, ModalStatus, Color, TrackingEvent, MessageType, View } from './types';
+export { Command, Event, Modal, ModalStatus, Color, TrackingEvent, MessageType, View, VisibilityEventInvoker, } from './types';
 export default AppExtensionsSDK;
