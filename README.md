@@ -19,11 +19,9 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Redirect to](#redirect-to)
   - [Show floating window](#show-floating-window)
   - [Hide floating window](#hide-floating-window)
-  - [Minimize floating window](#minimize-floating-window)
 - [Events](#events)
-  - [Change visibility](#change-visibility)
+  - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
-  - [Minimize floating window](#minimize-floating-window)
 
 ## Initialization
 
@@ -378,8 +376,8 @@ await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1 });
 
 ### Show floating window
 
-Opens floating window and triggers `Event.VISIBILITY` with `context` parameter that may be filled in
-and then read by event handler (see [Change visibility](#change-visibility) for details).
+Opens floating window and triggers ‘Event.VISIBILITY’ with an optional `context` parameter
+that is dependent on your app's use case (see [Visibility](#visibility) for details).
 
 **Parameters**
 
@@ -399,8 +397,8 @@ await sdk.execute(Command.SHOW_FLOATING_WINDOW, {
 
 ### Hide floating window
 
-Closes floating window and triggers `Event.VISIBILITY` with `context` parameter that may be filled
-in and then read by event handler (see [Change visibility](#change-visibility) for details).
+Closes floating window and triggers `Event.VISIBILITY` with an optional `context` parameter
+that is dependent on your app's use case (see [Visibility](#visibility) for details).
 
 **Parameters**
 
@@ -431,30 +429,30 @@ const stopReceivingEvents = sdk.listen(event, ({ error, data }) => {
 stopReceivingEvents(); // Call this function to stop receiving events
 ```
 
-### Change visibility
+### Visibility
 
-Subscribe to visibility changes that are triggered by the user or SDK command.
+Subscribe to visibility changes that are triggered by the user or an SDK command.
 
 #### Custom panel
 
-Event is triggered when user collapses or expands the panel
+Event is triggered when the user collapses or expands the panel.
 
 `context` parameter is not included.
 
 #### Floating window
 
-Event is triggered when floating window is displayed or gets hidden for user.
+Event is triggered when the floating window is displayed or gets hidden.
 
-`context` property may consist of data passed from command and will always contain `invoker` with
-possible values `command` or `user`.
+`context` property may consist of data passed from `Command.SHOW_FLOATING_WINDOW` or `Command.HIDE_FLOATING_WINDOW` command
+and will always contain `invoker` with possible values `command` or `user`.
 
 **Response**
 
-| Parameter       | Type    | Description                                             | Notes    |
-| --------------- | ------- | ------------------------------------------------------- | -------- |
-| is_visible      | Boolean | Is the extension visible to user                        | required |
-| context         | Object  | Contains properties specific to surface                 | optional |
-| context.invoker | String  | Describes if event was triggered by SDK command or user |          |
+| Parameter       | Type    | Description                                                        | Notes    |
+| --------------- | ------- | ------------------------------------------------------------------ | -------- |
+| is_visible      | Boolean | Specifies if the extension is visible to the user                  | required |
+| context         | Object  | Contains properties specific to extension                          | optional |
+| context.invoker | String  | Describes if the event was triggered by an SDK command or the user | optional |
 
 **Example**
 
