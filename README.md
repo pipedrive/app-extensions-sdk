@@ -418,28 +418,6 @@ await sdk.execute(Command.HIDE_FLOATING_WINDOW, {
 });
 ```
 
-### Minimize floating window
-
-Minimizes floating window and triggers `Event.MINIMIZE_FLOATING_WINDOW` with `context` parameter
-that may be filled in and then read by event handler (see [Change visibility](#change-visibility)
-for details).
-
-**Parameters**
-
-| Parameter | Type   | Description                                  | Notes    |
-| --------- | ------ | -------------------------------------------- | -------- |
-| context   | Object | Object to be passed as JSON to event handler | optional |
-
-**Example**
-
-```javascript
-await sdk.execute(Command.MINIMIZE_FLOATING_WINDOW, {
-  context: {
-    is_active: true,
-  },
-});
-```
-
 ## Events
 
 Subscribe to events triggered by user.
@@ -497,29 +475,5 @@ Subscribe to custom modal events that are triggered by this SDK's `CLOSE_MODAL` 
 ```javascript
 sdk.listen(Event.CLOSE_CUSTOM_MODAL, () => {
   // handle event
-});
-```
-
-### Minimize floating window
-
-Subscribe to event when user minimizes the floating window.
-
-`context` parameter may consist of data passed from `MINIMIZE_FLOATING_WINDOW` command and will
-always contain `invoker` with possible values `command` or `user`.
-
-**Response**
-
-| Parameter       | Type   | Description                                             | Notes |
-| --------------- | ------ | ------------------------------------------------------- | ----- |
-| context         | Object | Contains properties specific to surface                 |       |
-| context.invoker | String | Describes if event was triggered by SDK command or user |       |
-
-**Example**
-
-```javascript
-sdk.listen(Event.MINIMIZE_FLOATING_WINDOW, ({ data, error }) => {
-  if (data.context.invoker === VisibilityEventInvoker.COMMAND) {
-    doSomething(data.context.is_active);
-  }
 });
 ```

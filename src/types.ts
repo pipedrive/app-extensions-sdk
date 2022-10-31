@@ -14,13 +14,11 @@ export enum Command {
 	REDIRECT_TO = 'redirect_to',
 	SHOW_FLOATING_WINDOW = 'show_floating_window',
 	HIDE_FLOATING_WINDOW = 'hide_floating_window',
-	MINIMIZE_FLOATING_WINDOW = 'minimize_floating_window',
 }
 
 export enum Event {
 	VISIBILITY = 'visibility',
 	CLOSE_CUSTOM_MODAL = 'close_custom_modal',
-	MINIMIZE_FLOATING_WINDOW = 'minimize_floating_window',
 }
 
 export enum MessageType {
@@ -155,9 +153,6 @@ export type Args<T extends Command> = {
 	[Command.HIDE_FLOATING_WINDOW]: {
 		context?: Partial<Record<string, unknown>>;
 	};
-	[Command.MINIMIZE_FLOATING_WINDOW]: {
-		context?: Partial<Record<string, unknown>>;
-	};
 }[T];
 
 export type CommandResponse<T extends Command> = {
@@ -178,7 +173,6 @@ export type CommandResponse<T extends Command> = {
 	};
 	[Command.SHOW_FLOATING_WINDOW]: void;
 	[Command.HIDE_FLOATING_WINDOW]: void;
-	[Command.MINIMIZE_FLOATING_WINDOW]: void;
 }[T];
 
 export type MessageChannelCommandResponse<T extends Command> = {
@@ -194,9 +188,6 @@ export type EventResponse<T extends Event> = {
 			context?: Partial<Record<string, unknown> & Record<'invoker', VisibilityEventInvoker>>;
 		};
 		[Event.CLOSE_CUSTOM_MODAL]: void;
-		[Event.MINIMIZE_FLOATING_WINDOW]: {
-			context: Record<'invoker', VisibilityEventInvoker>;
-		};
 	}[T];
 };
 
