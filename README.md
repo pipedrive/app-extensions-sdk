@@ -140,8 +140,8 @@ await sdk.execute(Command.RESIZE, { height: 500 });
 ### Get signed token
 
 A new JSON Web Token (JWT) that is valid for 5 minutes will be generated. It can be verified using
-the JWT secret which you can add from Marketplace Manager when configuring a custom UI extension. If it’s not
-specified, use app’s client secret instead. JWT contains Pipedrive user and company ids.
+the JWT secret which you can add from Marketplace Manager when configuring a custom UI extension. If it's not
+specified, use app's client secret instead. JWT contains Pipedrive user and company ids.
 
 JWT can be used to assure that the custom UI extension is loaded by Pipedrive. It can be passed to your API
 requests and be verified on the server side. Note that JWT expires in 5 minutes so use this command
@@ -376,7 +376,7 @@ await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1 });
 
 ### Show floating window
 
-Opens floating window and triggers ‘Event.VISIBILITY’ with an optional `context` parameter
+Opens floating window and triggers `Event.VISIBILITY` with an optional `context` parameter
 that is dependent on your app's use case (see [Visibility](#visibility) for details).
 
 **Parameters**
