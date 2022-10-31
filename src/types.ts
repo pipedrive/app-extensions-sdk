@@ -12,6 +12,8 @@ export enum Command {
 	CLOSE_MODAL = 'close_modal',
 	GET_SIGNED_TOKEN = 'get_signed_token',
 	REDIRECT_TO = 'redirect_to',
+	SHOW_FLOATING_WINDOW = 'show_floating_window',
+	HIDE_FLOATING_WINDOW = 'hide_floating_window',
 }
 
 export enum Event {
@@ -122,6 +124,11 @@ export enum TrackingEvent {
 	FOCUSED = 'focused',
 }
 
+export enum VisibilityEventInvoker {
+	USER = 'user',
+	COMMAND = 'command',
+}
+
 export type Args<T extends Command> = {
 	[Command.INITIALIZE]: InitializationOptions;
 	[Command.SHOW_SNACKBAR]: {
@@ -140,6 +147,12 @@ export type Args<T extends Command> = {
 	[Command.CLOSE_MODAL]: void;
 	[Command.GET_SIGNED_TOKEN]: void;
 	[Command.REDIRECT_TO]: RedirectAttributes;
+	[Command.SHOW_FLOATING_WINDOW]: {
+		context?: Partial<Record<string, unknown>>;
+	};
+	[Command.HIDE_FLOATING_WINDOW]: {
+		context?: Partial<Record<string, unknown>>;
+	};
 }[T];
 
 export type CommandResponse<T extends Command> = {
@@ -158,6 +171,8 @@ export type CommandResponse<T extends Command> = {
 	[Command.GET_SIGNED_TOKEN]: {
 		token: string;
 	};
+	[Command.SHOW_FLOATING_WINDOW]: void;
+	[Command.HIDE_FLOATING_WINDOW]: void;
 }[T];
 
 export type MessageChannelCommandResponse<T extends Command> = {
@@ -170,6 +185,7 @@ export type EventResponse<T extends Event> = {
 	data?: {
 		[Event.VISIBILITY]: {
 			is_visible: boolean;
+			context?: Partial<Record<string, unknown> & Record<'invoker', VisibilityEventInvoker>>;
 		};
 		[Event.CLOSE_CUSTOM_MODAL]: void;
 	}[T];

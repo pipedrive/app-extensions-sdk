@@ -1,16 +1,16 @@
-import { detectIframeFocus, detectIdentifier } from './utils';
+import { detectIdentifier, detectIframeFocus } from './utils';
 import {
-	Options,
-	TrackingEvent,
 	Command,
-	Event,
-	MessageChannelCommandResponse,
 	CommandResponse,
-	Payload,
-	MessageType,
+	Event,
 	EventResponse,
 	ExecuteCommandArgs,
 	InitializationOptions,
+	MessageChannelCommandResponse,
+	MessageType,
+	Options,
+	Payload,
+	TrackingEvent,
 } from './types';
 
 const commandKeys = Object.values(Command);
@@ -137,6 +137,16 @@ class AppExtensionsSDK {
 	}
 }
 
-export { Command, Event, Modal, ModalStatus, Color, TrackingEvent, MessageType, View } from './types';
+export {
+	Command,
+	Event,
+	Modal,
+	ModalStatus,
+	Color,
+	TrackingEvent,
+	MessageType,
+	View,
+	VisibilityEventInvoker,
+} from './types';
 
 export default AppExtensionsSDK;

@@ -17,8 +17,10 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Open modal](#open-modal)
   - [Close modal](#close-modal)
   - [Redirect to](#redirect-to)
+  - [Show floating window](#show-floating-window)
+  - [Hide floating window](#hide-floating-window)
 - [Events](#events)
-  - [Custom panel visibility](#custom-panel-visibility)
+  - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
 
 ## Initialization
@@ -47,12 +49,13 @@ resolves. On error, it rejects.
 sdk.execute(/* ... */)
   .then((data) => {
     // handle data
-  }).catch((err) => {
-    // handle error
   })
+  .catch((err) => {
+    // handle error
+  });
 
 try {
-  const data = await sdk.execute(/* ... */)
+  const data = await sdk.execute(/* ... */);
 } catch (err) {
   // handle error
 }
@@ -65,7 +68,7 @@ Shows snackbar with provided message and link
 **Parameters**
 
 | Parameter  | Type   | Description                          | Notes    |
-|------------|--------|--------------------------------------|----------|
+| ---------- | ------ | ------------------------------------ | -------- |
 | message    | String | Message displayed in snackbar        | required |
 | link       | Object | Link displayed next to the message   | optional |
 | link.url   | string | URL for link displayed in snackbar   | required |
@@ -78,7 +81,7 @@ await sdk.execute(Command.SHOW_SNACKBAR, {
   message: 'Action completed',
   link: {
     url: 'https://app.pipedrive.com',
-    label: 'View'
+    label: 'View',
   },
 });
 ```
@@ -90,7 +93,7 @@ Shows confirmation dialog with provided title and description
 **Parameters**
 
 | Parameter   | Type   | Description                             | Notes                                                                                                                                          |
-|-------------|--------|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------- | ------ | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | title       | String |                                         | required                                                                                                                                       |
 | description | String | Longer description of what is confirmed | optional                                                                                                                                       |
 | okText      | String | Confirm button text                     | optional, default is "OK"                                                                                                                      |
@@ -100,7 +103,7 @@ Shows confirmation dialog with provided title and description
 **Response**
 
 | Parameter | Type    | Description            | Notes |
-|-----------|---------|------------------------|-------|
+| --------- | ------- | ---------------------- | ----- |
 | confirmed | Boolean | Result of confirmation |       |
 
 **Example**
@@ -108,7 +111,7 @@ Shows confirmation dialog with provided title and description
 ```javascript
 const { confirmed } = await sdk.execute(Command.SHOW_CONFIRMATION, {
   title: 'Confirm',
-  description: 'Are you sure you want to complete this action?'
+  description: 'Are you sure you want to complete this action?',
 });
 ```
 
@@ -123,8 +126,8 @@ limited to the user's browser dimensions.
 
 **Parameters**
 
-| Parameter | Type   | Description           | Notes    |
-|-----------|--------|-----------------------|----------|
+| Parameter | Type   | Description                      | Notes    |
+| --------- | ------ | -------------------------------- | -------- |
 | height    | Number | Height of the custom panel/modal | optional |
 | width     | Number | Width of the custom panel/modal  | optional |
 
@@ -137,8 +140,8 @@ await sdk.execute(Command.RESIZE, { height: 500 });
 ### Get signed token
 
 A new JSON Web Token (JWT) that is valid for 5 minutes will be generated. It can be verified using
-the JWT secret which you can add from Marketplace Manager when configuring a custom UI extension. If it’s not
-specified, use app’s client secret instead. JWT contains Pipedrive user and company ids.
+the JWT secret which you can add from Marketplace Manager when configuring a custom UI extension. If it's not
+specified, use app's client secret instead. JWT contains Pipedrive user and company ids.
 
 JWT can be used to assure that the custom UI extension is loaded by Pipedrive. It can be passed to your API
 requests and be verified on the server side. Note that JWT expires in 5 minutes so use this command
@@ -147,7 +150,7 @@ to get a new one.
 **Response**
 
 | Parameter | Type   | Description | Notes |
-|-----------|--------|-------------|-------|
+| --------- | ------ | ----------- | ----- |
 | token     | String |             |       |
 
 **Example**
@@ -159,22 +162,22 @@ const { token } = await sdk.execute(Command.GET_SIGNED_TOKEN);
 ### Open modal
 
 Opens a [JSON modal](#json-modal), [custom modal](#custom-modal) or a new
-Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal), [Person](#new-person-modal)
-or [Activity](#new-activity-modal) modal
+Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal),
+[Person](#new-person-modal) or [Activity](#new-activity-modal) modal
 
 ### JSON modal action
 
 **Parameters for JSON modal**
 
-| Parameter | Type   | Description                | Notes    |
-|-----------|--------|----------------------------|----------|
-| type      | Modal  |                            | required |
+| Parameter | Type   | Description                  | Notes    |
+| --------- | ------ | ---------------------------- | -------- |
+| type      | Modal  |                              | required |
 | action_id | String | JSON modal action id or name | required |
 
 **Response**
 
 | Parameter | Type   | Description                                | Notes |
-|-----------|--------|--------------------------------------------|-------|
+| --------- | ------ | ------------------------------------------ | ----- |
 | status    | String | Indicates if modal was submitted or closed |       |
 
 **Example**
@@ -182,7 +185,7 @@ or [Activity](#new-activity-modal) modal
 ```javascript
 const { status } = await sdk.execute(Command.OPEN_MODAL, {
   type: Modal.JSON_MODAL,
-  action_id: 'Open settings'
+  action_id: 'Open settings',
 });
 ```
 
@@ -191,15 +194,15 @@ const { status } = await sdk.execute(Command.OPEN_MODAL, {
 **Parameters for custom modal**
 
 | Parameter | Type   | Description                                                                                                                               | Notes    |
-|-----------|--------|-------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| --------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | type      | Modal  |                                                                                                                                           | required |
-| action_id | String | Custom modal id or name                                                                                                                 | required |
+| action_id | String | Custom modal id or name                                                                                                                   | required |
 | data      | Object | Object to be passed as stringified JSON to iframe, should be used with caution taking into account the maximum length of HTTP GET request | optional |
 
 **Response**
 
 | Parameter | Type   | Description                                | Notes |
-|-----------|--------|--------------------------------------------|-------|
+| --------- | ------ | ------------------------------------------ | ----- |
 | status    | String | Indicates if modal was submitted or closed |       |
 
 **Example**
@@ -209,8 +212,8 @@ const { status } = await sdk.execute(Command.OPEN_MODAL, {
   type: Modal.CUSTOM_MODAL,
   action_id: 'Open settings',
   data: {
-    item: 'xyz'
-  }
+    item: 'xyz',
+  },
 });
 ```
 
@@ -219,7 +222,7 @@ const { status } = await sdk.execute(Command.OPEN_MODAL, {
 **Parameters for new deal modal**
 
 | Parameter            | Type   | Description                                | Notes    |
-|----------------------|--------|--------------------------------------------|----------|
+| -------------------- | ------ | ------------------------------------------ | -------- |
 | type                 | Modal  |                                            | required |
 | prefill              | Object | Object to prefill some deal modal fields   | optional |
 | prefill.title        | String | Deal title                                 | optional |
@@ -229,7 +232,7 @@ const { status } = await sdk.execute(Command.OPEN_MODAL, {
 **Response**
 
 | Parameter | Type   | Description                                | Notes    |
-|-----------|--------|--------------------------------------------|----------|
+| --------- | ------ | ------------------------------------------ | -------- |
 | status    | String | Indicates if modal was submitted or closed |          |
 | id        | Number | ID of created deal if it was submitted     | optional |
 
@@ -239,8 +242,8 @@ const { status } = await sdk.execute(Command.OPEN_MODAL, {
 const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
   type: Modal.DEAL,
   prefill: {
-    title: 'Important deal'
-  }
+    title: 'Important deal',
+  },
 });
 ```
 
@@ -249,7 +252,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 **Parameters for new person modal**
 
 | Parameter            | Type   | Description                                    | Notes    |
-|----------------------|--------|------------------------------------------------|----------|
+| -------------------- | ------ | ---------------------------------------------- | -------- |
 | type                 | Modal  |                                                | required |
 | prefill              | Object | Object to prefill some new person modal fields | optional |
 | prefill.name         | String | Person name                                    | optional |
@@ -258,7 +261,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 **Response**
 
 | Parameter | Type   | Description                                | Notes    |
-|-----------|--------|--------------------------------------------|----------|
+| --------- | ------ | ------------------------------------------ | -------- |
 | status    | String | Indicates if modal was submitted or closed |          |
 | id        | Number | ID of added person if it was submitted     | optional |
 
@@ -269,8 +272,8 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
   type: Modal.PERSON,
   prefill: {
     name: 'Some name',
-    organization: 'Some organization'
-  }
+    organization: 'Some organization',
+  },
 });
 ```
 
@@ -279,7 +282,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 **Parameters for new organization modal**
 
 | Parameter    | Type   | Description                                          | Notes    |
-|--------------|--------|------------------------------------------------------|----------|
+| ------------ | ------ | ---------------------------------------------------- | -------- |
 | type         | Modal  |                                                      | required |
 | prefill      | Object | Object to prefill some new organization modal fields | optional |
 | prefill.name | String | Organization name                                    | optional |
@@ -287,7 +290,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 **Response**
 
 | Parameter | Type   | Description                                  | Notes    |
-|-----------|--------|----------------------------------------------|----------|
+| --------- | ------ | -------------------------------------------- | -------- |
 | status    | String | Indicates if modal was submitted or closed   |          |
 | id        | Number | ID of added organization if it was submitted | optional |
 
@@ -298,7 +301,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
   type: Modal.ORGANIZATION,
   prefill: {
     name: 'Some organization',
-  }
+  },
 });
 ```
 
@@ -307,7 +310,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 **Parameters for new activity modal**
 
 | Parameter            | Type   | Description                                                                | Notes    |
-|----------------------|--------|----------------------------------------------------------------------------|----------|
+| -------------------- | ------ | -------------------------------------------------------------------------- | -------- |
 | type                 | Modal  |                                                                            | required |
 | prefill              | Object | Object to prefill some new activity modal fields                           | optional |
 | prefill.subject      | String | Activity subject                                                           | optional |
@@ -322,7 +325,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 **Response**
 
 | Parameter | Type   | Description                                | Notes    |
-|-----------|--------|--------------------------------------------|----------|
+| --------- | ------ | ------------------------------------------ | -------- |
 | status    | String | Indicates if modal was submitted or closed |          |
 | id        | Number | ID of added activity if it was submitted   | optional |
 
@@ -340,7 +343,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
     description: 'Discussion about deal specifics',
     deal: 10,
     organization: 2,
-  }
+  },
 });
 ```
 
@@ -360,15 +363,57 @@ Redirects user to specified view.
 
 **Parameters**
 
-| Parameter  | Type          | Description                                                                                                                                         | Notes                                                                                                                                                                                                                        |
-|------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| view       | View          | View where the user will be redirected to                                                                                                           | required<br/><br/>Supported views:<br/>View.DEALS<br/>View.LEADS<br/>View.ORGANIZATIONS<br/>View.CONTACTS<br/>View.CAMPAIGNS<br/>View.PROJECTS<br/>View.SETTINGS - redirects to [custom settings page](https://pipedrive.readme.io/docs/custom-ui-extensions-app-settings) |
-| id         | String/Number | ID of the entity where the user will be redirected. If not provided, the user will be redirected to list view that's specified by the `view` property | optional                                                                                                                                                                                                                     |
+| Parameter | Type          | Description                                                                                                                                           | Notes                                                                                                                                                                                                                                                                      |
+| --------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| view      | View          | View where the user will be redirected to                                                                                                             | required<br/><br/>Supported views:<br/>View.DEALS<br/>View.LEADS<br/>View.ORGANIZATIONS<br/>View.CONTACTS<br/>View.CAMPAIGNS<br/>View.PROJECTS<br/>View.SETTINGS - redirects to [custom settings page](https://pipedrive.readme.io/docs/custom-ui-extensions-app-settings) |
+| id        | String/Number | ID of the entity where the user will be redirected. If not provided, the user will be redirected to list view that's specified by the `view` property | optional                                                                                                                                                                                                                                                                   |
 
 **Example**
 
 ```javascript
 await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1 });
+```
+
+### Show floating window
+
+Opens floating window and triggers `Event.VISIBILITY` with an optional `context` parameter
+that is dependent on your app's use case (see [Visibility](#visibility) for details).
+
+**Parameters**
+
+| Parameter | Type   | Description                                  | Notes    |
+| --------- | ------ | -------------------------------------------- | -------- |
+| context   | Object | Object to be passed as JSON to event handler | optional |
+
+**Example**
+
+```javascript
+await sdk.execute(Command.SHOW_FLOATING_WINDOW, {
+  context: {
+    person_id: 42,
+  },
+});
+```
+
+### Hide floating window
+
+Closes floating window and triggers `Event.VISIBILITY` with an optional `context` parameter
+that is dependent on your app's use case (see [Visibility](#visibility) for details).
+
+**Parameters**
+
+| Parameter | Type   | Description                                  | Notes    |
+| --------- | ------ | -------------------------------------------- | -------- |
+| context   | Object | Object to be passed as JSON to event handler | optional |
+
+**Example**
+
+```javascript
+await sdk.execute(Command.HIDE_FLOATING_WINDOW, {
+  context: {
+    person_id: 42,
+  },
+});
 ```
 
 ## Events
@@ -384,17 +429,30 @@ const stopReceivingEvents = sdk.listen(event, ({ error, data }) => {
 stopReceivingEvents(); // Call this function to stop receiving events
 ```
 
-### Custom panel visibility
+### Visibility
 
-Subscribe to custom panel visibility changes that are triggered by the user.
+Subscribe to visibility changes that are triggered by the user or an SDK command.
 
-**Custom panel** - user collapses or expands the panel
+#### Custom panel
+
+Event is triggered when the user collapses or expands the panel.
+
+`context` parameter is not included.
+
+#### Floating window
+
+Event is triggered when the floating window is displayed or gets hidden.
+
+`context` property may consist of data passed from `Command.SHOW_FLOATING_WINDOW` or `Command.HIDE_FLOATING_WINDOW` command
+and will always contain `invoker` with possible values `command` or `user`.
 
 **Response**
 
-| Parameter  | Type    | Description                      | Notes |
-|------------|---------|----------------------------------|-------|
-| is_visible | Boolean | Is the extension visible to user |       |
+| Parameter       | Type    | Description                                                        | Notes    |
+| --------------- | ------- | ------------------------------------------------------------------ | -------- |
+| is_visible      | Boolean | Specifies if the extension is visible to the user                  | required |
+| context         | Object  | Contains properties specific to extension                          | optional |
+| context.invoker | String  | Describes if the event was triggered by an SDK command or the user | optional |
 
 **Example**
 

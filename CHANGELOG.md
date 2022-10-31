@@ -1,10 +1,21 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.4.0] - 2022-10-31
+
+### Added
+
+- `SHOW_FLOATING_WINDOW` and `HIDE_FLOATING_WINDOW` commands
+
+### Updated
+
+- `Event.VISIBILITY` for floating windows will receive `context` property
 
 ## [0.3.0] - 2022-10-17
 
@@ -33,4 +44,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add event listener functionality
 - Add option to listen for panel collapse and expand event
 - Add surface unique id detection and pass it to postMessage invocations
-
