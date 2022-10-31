@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `SHOW_FLOATING_WINDOW` and `HIDE_FLOATING_WINDOW` commands
+
+### Updated
+
+- `Event.VISIBILITY` for floating windows will receive `context` property
+
 ## [0.3.0] - 2022-10-17
 
 - New type `ACTIVITY` for `OPEN_MODAL` command
