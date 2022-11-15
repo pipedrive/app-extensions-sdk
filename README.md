@@ -19,6 +19,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Redirect to](#redirect-to)
   - [Show floating window](#show-floating-window)
   - [Hide floating window](#hide-floating-window)
+  - [Show notification](#show-notification)
 - [Events](#events)
   - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
