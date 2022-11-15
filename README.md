@@ -416,6 +416,25 @@ await sdk.execute(Command.HIDE_FLOATING_WINDOW, {
 });
 ```
 
+### Show notification
+
+For apps with floating window, set or remove notifications dot in apps dock.
+Not specifying the number or setting it to 0 clears the notification dot.
+
+**Parameters**
+
+| Parameter | Type   | Description             | Notes    |
+|-----------|--------|-------------------------| -------- |
+| number    | Number | Number of notifications | optional |
+
+**Example**
+
+```javascript
+await sdk.execute(Command.SET_NOTIFICATION, {
+  number: 3,
+});
+```
+
 ## Events
 
 Subscribe to events triggered by user.
