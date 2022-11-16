@@ -438,7 +438,7 @@ await sdk.execute(Command.SET_NOTIFICATION, {
 
 ## Events
 
-Subscribe to events triggered by user.
+Subscribe to events triggered by users.
 
 ```javascript
 const stopReceivingEvents = sdk.listen(event, ({ error, data }) => {
