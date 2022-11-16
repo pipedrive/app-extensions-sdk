@@ -19,7 +19,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Redirect to](#redirect-to)
   - [Show floating window](#show-floating-window)
   - [Hide floating window](#hide-floating-window)
-  - [Show notification](#show-notification)
+  - [Set notification](#set-notification)
 - [Events](#events)
   - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
@@ -27,7 +27,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
 ## Initialization
 
 In order to display a custom UI extension to a user, this SDK has to be initialized.
-In the iframe request, query id attribute is passed, which has to be provided to the SDK constructor.
+In the iframe request, query `id` attribute is passed, which has to be provided to the SDK constructor.
 The SDK will try to read it from the URL query. If the URL is modified (e.g. with redirects), then it has to be passed manually.
 
 ```javascript
@@ -144,8 +144,8 @@ A new JSON Web Token (JWT) that is valid for 5 minutes will be generated. It can
 the JWT secret which you can add from Marketplace Manager when configuring a custom UI extension. If it's not
 specified, use app's client secret instead. JWT contains Pipedrive user and company ids.
 
-JWT can be used to assure that the custom UI extension is loaded by Pipedrive. It can be passed to your API
-requests and be verified on the server side. Note that JWT expires in 5 minutes so use this command
+JWT can be used to ensure that the custom UI extension is loaded by Pipedrive. It can be passed to your API
+requests and be verified on the server side. As JWT expires in 5 minutes, you can use this command
 to get a new one.
 
 **Response**
@@ -417,9 +417,9 @@ await sdk.execute(Command.HIDE_FLOATING_WINDOW, {
 });
 ```
 
-### Show notification
+### Set notification
 
-For apps with floating window, set or remove notifications dot in apps dock.
+For apps with a floating window, you can set or remove the notifications dot in the apps dock with this command.
 Not specifying the number or setting it to 0 clears the notification dot.
 
 **Parameters**
