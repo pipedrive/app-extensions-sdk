@@ -20,6 +20,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Show floating window](#show-floating-window)
   - [Hide floating window](#hide-floating-window)
   - [Set notification](#set-notification)
+  - [Set active mode](#set-active-mode)
 - [Events](#events)
   - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
