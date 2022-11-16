@@ -15,6 +15,7 @@ export enum Command {
 	SHOW_FLOATING_WINDOW = 'show_floating_window',
 	HIDE_FLOATING_WINDOW = 'hide_floating_window',
 	SET_NOTIFICATION = 'set_notification',
+	SET_ACTIVE_MODE = 'set_active_mode',
 }
 
 export enum Event {
@@ -157,6 +158,7 @@ export type Args<T extends Command> = {
 	[Command.SET_NOTIFICATION]: {
 		number?: number;
 	};
+	[Command.SET_ACTIVE_MODE]: boolean;
 }[T];
 
 export type CommandResponse<T extends Command> = {
@@ -178,6 +180,7 @@ export type CommandResponse<T extends Command> = {
 	[Command.SHOW_FLOATING_WINDOW]: void;
 	[Command.HIDE_FLOATING_WINDOW]: void;
 	[Command.SET_NOTIFICATION]: void;
+	[Command.SET_ACTIVE_MODE]: void;
 }[T];
 
 export type MessageChannelCommandResponse<T extends Command> = {

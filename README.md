@@ -436,6 +436,21 @@ await sdk.execute(Command.SET_NOTIFICATION, {
 });
 ```
 
+### Set active mode
+
+For apps with a floating window, you can enable or disable active mode. When active mode is enabled,
+the close button in the window header is hidden. This should only be used to avoid users accidentally
+closing the window while action is in progress (e.g. a phone call). There should be a clear
+call-to-action to disable the active mode (e.g. end call button).
+
+This command only accepts a boolean as the second parameter.
+
+**Example**
+
+```javascript
+await sdk.execute(Command.SET_ACTIVE_MODE, true);
+```
+
 ## Events
 
 Subscribe to events triggered by users.

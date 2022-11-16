@@ -1,4 +1,4 @@
-import { detectIdentifier, detectIframeFocus } from './utils';
+import {detectIdentifier, detectIframeFocus} from './utils';
 import {
 	Command,
 	CommandResponse,
