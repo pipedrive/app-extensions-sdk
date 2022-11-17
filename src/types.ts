@@ -14,6 +14,7 @@ export enum Command {
 	REDIRECT_TO = 'redirect_to',
 	SHOW_FLOATING_WINDOW = 'show_floating_window',
 	HIDE_FLOATING_WINDOW = 'hide_floating_window',
+	SET_NOTIFICATION = 'set_notification',
 }
 
 export enum Event {
@@ -153,6 +154,9 @@ export type Args<T extends Command> = {
 	[Command.HIDE_FLOATING_WINDOW]: {
 		context?: Partial<Record<string, unknown>>;
 	};
+	[Command.SET_NOTIFICATION]: {
+		number?: number;
+	};
 }[T];
 
 export type CommandResponse<T extends Command> = {
@@ -173,6 +177,7 @@ export type CommandResponse<T extends Command> = {
 	};
 	[Command.SHOW_FLOATING_WINDOW]: void;
 	[Command.HIDE_FLOATING_WINDOW]: void;
+	[Command.SET_NOTIFICATION]: void;
 }[T];
 
 export type MessageChannelCommandResponse<T extends Command> = {
