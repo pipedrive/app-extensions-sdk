@@ -20,7 +20,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Show floating window](#show-floating-window)
   - [Hide floating window](#hide-floating-window)
   - [Set notification](#set-notification)
-  - [Set active mode](#set-active-mode)
+  - [Set focus mode](#set-focus-mode)
 - [Events](#events)
   - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
@@ -437,19 +437,20 @@ await sdk.execute(Command.SET_NOTIFICATION, {
 });
 ```
 
-### Set active mode
+### Set focus mode
 
-For apps with a floating window, you can enable or disable active mode. When active mode is enabled,
+For apps with a floating window, you can enable or disable focus mode. When focus mode is enabled,
 the close button in the window header is hidden. This should only be used to avoid users accidentally
 closing the window while action is in progress (e.g. a phone call). There should be a clear
-call-to-action to disable the active mode (e.g. end call button).
+call-to-action to disable the focus mode (e.g. end call button).
 
-This command only accepts a boolean as the second parameter.
+This command only accepts a boolean as the second parameter and the floating window must be visible
+before using this command.
 
 **Example**
 
 ```javascript
-await sdk.execute(Command.SET_ACTIVE_MODE, true);
+await sdk.execute(Command.SET_FOCUS_MODE, true);
 ```
 
 ## Events
