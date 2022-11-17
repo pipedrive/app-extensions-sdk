@@ -419,8 +419,9 @@ await sdk.execute(Command.HIDE_FLOATING_WINDOW, {
 
 ### Set notification
 
-For apps with a floating window, you can set or remove the notifications dot in the apps dock with this command.
-Not specifying the number or setting it to 0 clears the notification dot.
+For apps with floating window, display or remove notifications badge in apps dock. Not specifying
+the number or setting it to `0` removes the notification badge. Specifying a number greater than `0`
+displays a badge with that number.
 
 **Parameters**
 
