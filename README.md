@@ -440,13 +440,15 @@ await sdk.execute(Command.SET_NOTIFICATION, {
 
 ### Set focus mode
 
-For apps with a floating window, you can enable or disable focus mode. When focus mode is enabled,
-the close button in the window header is hidden. This should only be used to avoid users accidentally
-closing the window while action is in progress (e.g. a phone call). There should be a clear
-call-to-action to disable the focus mode (e.g. end call button).
+For apps with a floating window, you can enable or disable focus mode. When the focus mode is
+enabled, the close button in the window header is hidden.
 
-This command only accepts a boolean as the second parameter and the floating window must be visible
-before using this command.
+This should only be used to avoid users accidentally closing the window while an action is in
+progress, e.g., a phone call. There should be a clear call-to-action to disable the focus mode,
+e.g., the end call button.
+
+This command only accepts a boolean as the second parameter, and the floating window must be
+visible before using this command.
 
 **Example**
 
