@@ -20,6 +20,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Show floating window](#show-floating-window)
   - [Hide floating window](#hide-floating-window)
   - [Set notification](#set-notification)
+  - [Set focus mode](#set-focus-mode)
 - [Events](#events)
   - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
@@ -435,6 +436,24 @@ displays a badge with that number.
 await sdk.execute(Command.SET_NOTIFICATION, {
   number: 3,
 });
+```
+
+### Set focus mode
+
+For apps with a floating window, you can enable or disable focus mode. When the focus mode is
+enabled, the close button in the window header is hidden.
+
+This should only be used to avoid users accidentally closing the window while an action is in
+progress, e.g., a phone call. There should be a clear call-to-action to disable the focus mode,
+e.g., the end call button.
+
+This command only accepts a boolean as the second parameter, and the floating window must be
+visible before using this command.
+
+**Example**
+
+```javascript
+await sdk.execute(Command.SET_FOCUS_MODE, true);
 ```
 
 ## Events
