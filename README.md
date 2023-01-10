@@ -126,12 +126,15 @@ Resizes custom UI extension with provided height and width
 **Custom modal** - both height and width can be changed. The minimum height is 120px and the minimum width is 320px . The maximum height and width are
 limited to the user's browser dimensions.
 
+**Custom floating window** - both height and width can be changed. The minimum height is 70px and the maximum height is 700px.
+The minimum width is 200px and the maximum width is 800px.
+
 **Parameters**
 
-| Parameter | Type   | Description                      | Notes    |
-| --------- | ------ | -------------------------------- | -------- |
-| height    | Number | Height of the custom panel/modal | optional |
-| width     | Number | Width of the custom panel/modal  | optional |
+| Parameter | Type   | Description                       | Notes    |
+| --------- | ------ |-----------------------------------| -------- |
+| height    | Number | Height of the custom UI extension | optional |
+| width     | Number | Width of the custom UI extension  | optional |
 
 **Example**
 
