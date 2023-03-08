@@ -135,6 +135,14 @@ class AppExtensionsSDK {
 
 		return this;
 	}
+
+	public tabVisibilityListener(cb: (arg: { visibility: 'hidden' | 'visible' }) => void): void {
+		const onChange = () => {
+			cb({ visibility: document.visibilityState });
+		};
+
+		document.addEventListener('visibilitychange', onChange);
+	}
 }
 
 export {
