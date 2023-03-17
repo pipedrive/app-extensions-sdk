@@ -225,3 +225,7 @@ export type RedirectAttributes = {
 	view: View;
 	id?: number | string;
 };
+
+export type PageVisibilityStateArgs = {
+	state: 'visible' | 'hidden'
+}

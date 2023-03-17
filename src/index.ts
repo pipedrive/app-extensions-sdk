@@ -11,6 +11,7 @@ import {
 	Options,
 	Payload,
 	TrackingEvent,
+	PageVisibilityStateArgs,
 } from './types';
 
 const commandKeys = Object.values(Command);
@@ -90,9 +91,23 @@ class AppExtensionsSDK {
 		this.window.postMessage(message, targetOrigin);
 	}
 
+	private onPageVisibilityChange(cb: (args: PageVisibilityStateArgs) => void) {
+		const onChange = () => {
+			cb({ state: document.visibilityState });
+		};
+
+		document.addEventListener('visibilitychange', onChange);
+
+		return () => document.addEventListener('visibilitychange', onChange);
+	}
+
 	public listen<K extends Event>(event: K, onEventReceived: (response: EventResponse<K>) => void) {
 		if (!eventKeys.includes(event)) {
 			throw new Error('Invalid event');
+		}
+
+		if (event === Event.PAGE_VISIBILITY_STATE) {
+			this.onPageVisibilityChange(onEventReceived as (args: PageVisibilityStateArgs) => void)
 		}
 
 		const channel = new MessageChannel();
@@ -134,16 +149,6 @@ class AppExtensionsSDK {
 		this.initialized = true;
 
 		return this;
-	}
-
-	public onPageVisibilityChange(cb: (arg: { visibility: 'hidden' | 'visible' }) => void) {
-		const onChange = () => {
-			cb({ visibility: document.visibilityState });
-		};
-
-		document.addEventListener('visibilitychange', onChange);
-
-		return () => document.removeEventListener('visibilitychange', onChange);
 	}
 }
 
