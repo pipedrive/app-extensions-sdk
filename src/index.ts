@@ -11,7 +11,7 @@ import {
 	Options,
 	Payload,
 	TrackingEvent,
-	PageVisibilityStateResponse,
+	PageStateResponse,
 } from './types';
 
 const commandKeys = Object.values(Command);
@@ -91,7 +91,7 @@ class AppExtensionsSDK {
 		this.window.postMessage(message, targetOrigin);
 	}
 
-	private onPageVisibilityChange(cb: (response: PageVisibilityStateResponse) => void) {
+	private onPageVisibilityChange(cb: (response: PageStateResponse) => void) {
 		const onChange = () => {
 			cb({ data: { state: document.visibilityState } });
 		};
@@ -107,7 +107,7 @@ class AppExtensionsSDK {
 		}
 
 		if (event === Event.PAGE_VISIBILITY_STATE) {
-			return this.onPageVisibilityChange(onEventReceived as (response: PageVisibilityStateResponse) => void);
+			return this.onPageVisibilityChange(onEventReceived as (response: PageStateResponse) => void);
 		}
 
 		const channel = new MessageChannel();

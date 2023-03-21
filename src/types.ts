@@ -226,7 +226,7 @@ export type RedirectAttributes = {
 	id?: number | string;
 };
 
-export type PageVisibilityStateResponse = {
+export type PageStateResponse = {
 	data: {
 		state: 'visible' | 'hidden';
 	};
