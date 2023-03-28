@@ -21,6 +21,7 @@ export enum Command {
 export enum Event {
 	VISIBILITY = 'visibility',
 	CLOSE_CUSTOM_MODAL = 'close_custom_modal',
+	PAGE_VISIBILITY_STATE = 'page_visibility_state',
 }
 
 export enum MessageType {
@@ -196,6 +197,9 @@ export type EventResponse<T extends Event> = {
 			context?: Partial<Record<string, unknown> & Record<'invoker', VisibilityEventInvoker>>;
 		};
 		[Event.CLOSE_CUSTOM_MODAL]: void;
+		[Event.PAGE_VISIBILITY_STATE]: {
+			state: 'visible' | 'hidden';
+		};
 	}[T];
 };
 
@@ -220,4 +224,10 @@ export enum View {
 export type RedirectAttributes = {
 	view: View;
 	id?: number | string;
+};
+
+export type PageStateResponse = {
+	data: {
+		state: 'visible' | 'hidden';
+	};
 };

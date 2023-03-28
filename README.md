@@ -518,3 +518,32 @@ sdk.listen(Event.CLOSE_CUSTOM_MODAL, () => {
   // handle event
 });
 ```
+
+### Page visibility state
+
+Subscribe to page visibility event that is triggered when the value of `visibilityState` property of the document changes.
+It is useful to know if the page is in the background or an invisible tab.
+
+| Parameter | Type   | Description                                                  | Notes    |
+| --------- | ------ | ------------------------------------------------------------ | -------- |
+| state     | String | Indicates if the page content is visible for the user or not | required |
+
+**Possible state values**
+
+`visible`
+
+The page content may be at least partially visible. In practice this means that the page is the foreground tab of a non-minimized window.
+
+`hidden`
+
+The page content is not visible to the user. In practice this means that the document is either a background tab or part of a minimized window, or the OS screen lock is active.
+
+**Example**
+
+```javascript
+const stopReceivingPageStateEvent = sdk.listen(Event.PAGE_VISIBILITY_STATE, ({ data }) => {
+  // handle data
+});
+
+stopReceivingPageStateEvent() // Call this function to stop receiving event
+```
