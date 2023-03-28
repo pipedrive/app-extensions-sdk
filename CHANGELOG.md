@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.7.0] - 2023-03-28
+
 ### Added
 
 - New event `PAGE_VISIBILITY_STATE` to detect if Custom UI is in the visible browser tab
