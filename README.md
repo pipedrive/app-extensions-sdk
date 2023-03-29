@@ -521,22 +521,19 @@ sdk.listen(Event.CLOSE_CUSTOM_MODAL, () => {
 
 ### Page visibility state
 
-Subscribe to page visibility event that is triggered when the value of `visibilityState` property of the document changes.
-It is useful to know if the page is in the background or an invisible tab.
+Subscribe to the page visibility event that is triggered when the value of the `visibilityState` property changes. This event enables you to find out if the page your app extension will be loaded in is visible/in the background or hidden.
 
-| Parameter | Type   | Description                                                  | Notes    |
-| --------- | ------ | ------------------------------------------------------------ | -------- |
-| state     | String | Indicates if the page content is visible for the user or not | required |
+| Parameter | Type   | Description                                   | Notes    |
+| --------- | ------ | --------------------------------------------- | -------- |
+| state     | String | Indicates if the page is visible for the user | required |
 
 **Possible state values**
 
 `visible`
-
-The page content may be at least partially visible. In practice this means that the page is the foreground tab of a non-minimized window.
+The page is at least partially visible to the user. In practice this means that the page is the foreground tab of a non-minimized window.
 
 `hidden`
-
-The page content is not visible to the user. In practice this means that the document is either a background tab or part of a minimized window, or the OS screen lock is active.
+The page is not visible to the user. In practice this means that the page is either a background tab or part of a minimized window, or the OS screen lock is active.
 
 **Example**
 
