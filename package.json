@@ -15,7 +15,7 @@
     "test": "jest --passWithNoTests",
     "coverage": "npm test -- --coverage",
     "prepublish": "npm run build",
-    "build": "tsc -p .",
+    "build": "rollup -c",
     "lint:eslint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "lint:tsc": "tsc --noEmit",
     "lint": "npm run lint:tsc && npm run lint:eslint",
@@ -46,6 +46,8 @@
     "jest": "^27.4.7",
     "prettier": "^2.5.1",
     "rollup": "^2.66.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.4.0",
     "typescript": "^4.6.2"
   }
 }
