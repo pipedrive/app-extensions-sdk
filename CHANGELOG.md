@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- UMD version to build output
+- Instructions how to initialize without a bundler
+
 ## [0.7.1] - 2023-03-29
 
 ### Updated
