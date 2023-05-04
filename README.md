@@ -44,7 +44,7 @@ const sdk = await new AppExtensionsSDK({ identifier: '123abc' })
 
 ### Without module bundler
 
-Initialization without bundler is possible by adding script to your HTML page from jsDelivr CDN.
+Initialization without a module bundler is possible by adding the following script to your HTML page from jsDelivr CDN:
 
 ```HTML
 <head>
@@ -52,10 +52,10 @@ Initialization without bundler is possible by adding script to your HTML page fr
 </head>
 ```
 
-NB! Pay attention to package version in the URL: `app-extensions-sdk@0.8.0`. You can use version range,
-but do not omit the version completely in production to avoid undesired issues.
+NB: Pay attention to the package version in the URL - `app-extensions-sdk@0.8.0`. While you can also use version range,
+ensure you do not omit the version completely in production. This is to avoid any issues.
 
-After that global `AppExtensionsSDK` will be available and initialization can be done the same way below in HTML body:
+After this, the global `AppExtensionsSDK` will be available. Initialization can be then done the same way below in the HTML body:
 
 ```HTML
 <body>
