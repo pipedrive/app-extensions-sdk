@@ -42,6 +42,31 @@ const sdk = await new AppExtensionsSDK({ identifier: '123abc' })
   .initialize({ size: { height: 500 } });
 ```
 
+### Without module bundler
+
+Initialization without a module bundler is possible by adding the following script to your HTML page from jsDelivr CDN:
+
+```HTML
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0/dist/index.umd.js"></script>
+</head>
+```
+
+NB: Pay attention to the package version in the URL - `app-extensions-sdk@0`. While you can also use version range,
+ensure you do not omit the version completely in production. This is to avoid any issues.
+
+After this, the global `AppExtensionsSDK` will be available. Initialization can be then done the same way below in the HTML body:
+
+```HTML
+<body>
+  <script>
+    (async function() {
+      const sdk = await new AppExtensionsSDK().initialize();
+    })();
+  </script>
+</body>
+```
+
 ## Commands
 
 Commands can be invoked with the `execute` method. On successful command execution, promise
