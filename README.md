@@ -48,11 +48,11 @@ Initialization without a module bundler is possible by adding the following scri
 
 ```HTML
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.8.0/dist/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0/dist/index.umd.js"></script>
 </head>
 ```
 
-NB: Pay attention to the package version in the URL - `app-extensions-sdk@0.8.0`. While you can also use version range,
+NB: Pay attention to the package version in the URL - `app-extensions-sdk@0`. While you can also use version range,
 ensure you do not omit the version completely in production. This is to avoid any issues.
 
 After this, the global `AppExtensionsSDK` will be available. Initialization can be then done the same way below in the HTML body:
