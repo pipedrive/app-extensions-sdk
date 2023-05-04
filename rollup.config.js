@@ -22,7 +22,7 @@ export default [
 				format: 'umd',
 				sourcemap: true,
 				exports: 'default',
-				name: 'AppExtensionsSdk',
+				name: 'AppExtensionsSDK',
 				plugins: [terser()],
 			},
 		],

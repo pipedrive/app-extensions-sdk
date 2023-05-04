@@ -61,7 +61,7 @@ After that global `AppExtensionsSDK` will be available and initialization can be
 <body>
   <script>
     (async function() {
-      const sdk = await new AppExtensionsSdk().initialize();
+      const sdk = await new AppExtensionsSDK().initialize();
     })();
   </script>
 </body>
