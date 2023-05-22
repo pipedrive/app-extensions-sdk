@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.9.0] - 2023-05-22
+
+### Fixed
+- Add missing View and VisibilityEventInvoker for umd default export
+
 ## [0.8.0] - 2023-05-04
 
 ### Added

@@ -1,4 +1,14 @@
-import AppExtensionsSDK, { Command, Event, Modal, ModalStatus, Color, TrackingEvent, MessageType } from './index';
+import AppExtensionsSDK, {
+	Command,
+	Event,
+	Modal,
+	ModalStatus,
+	Color,
+	TrackingEvent,
+	MessageType,
+	View,
+	VisibilityEventInvoker,
+} from './index';
 
 export default Object.assign(AppExtensionsSDK, {
 	Command,
@@ -8,4 +18,6 @@ export default Object.assign(AppExtensionsSDK, {
 	Color,
 	TrackingEvent,
 	MessageType,
+	View,
+	VisibilityEventInvoker,
 });
