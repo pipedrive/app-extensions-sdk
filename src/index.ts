@@ -25,12 +25,12 @@ class AppExtensionsSDK {
 	public userSettings: UserSettings;
 
 	constructor(options: Options = {}) {
-		const { identifier, targetWindow, userSettings } = options;
+		const { identifier, targetWindow } = options;
 
 		this.initialized = false;
 		this.window = targetWindow ?? window.parent;
 		this.identifier = identifier ?? detectIdentifier();
-		this.userSettings = userSettings ?? detectUserSettings();
+		this.userSettings = detectUserSettings();
 
 		if (!this.identifier) {
 			throw new Error('Missing custom UI identifier');

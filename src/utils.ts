@@ -27,6 +27,6 @@ export function detectUserSettings(): UserSettings {
 	const params = new URLSearchParams(window.location.search);
 
 	return {
-		theme: params.get('theme') === UserSettingsTheme.dark ? UserSettingsTheme.dark : UserSettingsTheme.light,
+		theme: params.get('theme') === UserSettingsTheme.DARK ? UserSettingsTheme.DARK : UserSettingsTheme.LIGHT,
 	};
 }

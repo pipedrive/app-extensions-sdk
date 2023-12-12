@@ -1,15 +1,6 @@
-export enum UserSettingsTheme {
-	dark = 'dark',
-	light = 'light',
-}
-export type UserSettings = {
-	theme: UserSettingsTheme;
-};
-
 export type Options = {
 	identifier?: string;
 	targetWindow?: Window;
-	userSettings?: UserSettings;
 };
 
 export enum Command {
@@ -141,6 +132,15 @@ export enum VisibilityEventInvoker {
 	USER = 'user',
 	COMMAND = 'command',
 }
+
+export enum UserSettingsTheme {
+	DARK = 'dark',
+	LIGHT = 'light',
+}
+
+export type UserSettings = {
+	theme: UserSettingsTheme;
+};
 
 export type Args<T extends Command> = {
 	[Command.INITIALIZE]: InitializationOptions;
