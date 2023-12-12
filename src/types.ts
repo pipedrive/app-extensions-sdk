@@ -31,6 +31,7 @@ export enum Event {
 	VISIBILITY = 'visibility',
 	CLOSE_CUSTOM_MODAL = 'close_custom_modal',
 	PAGE_VISIBILITY_STATE = 'page_visibility_state',
+	USER_SETTINGS_CHANGE = 'user_settings_change',
 }
 
 export enum MessageType {
@@ -208,6 +209,9 @@ export type EventResponse<T extends Event> = {
 		[Event.CLOSE_CUSTOM_MODAL]: void;
 		[Event.PAGE_VISIBILITY_STATE]: {
 			state: 'visible' | 'hidden';
+		};
+		[Event.USER_SETTINGS_CHANGE]: {
+			theme: UserSettingsTheme;
 		};
 	}[T];
 };

@@ -9,9 +9,9 @@ import {
 	MessageChannelCommandResponse,
 	MessageType,
 	Options,
+	PageStateResponse,
 	Payload,
 	TrackingEvent,
-	PageStateResponse,
 	UserSettings,
 } from './types';
 
@@ -129,6 +129,10 @@ class AppExtensionsSDK {
 			}
 
 			onEventReceived(data);
+
+			if (event === Event.USER_SETTINGS_CHANGE && data) {
+				this.userSettings = data as UserSettings;
+			}
 		};
 
 		this.window.postMessage(message, '*', [channel.port2]);
