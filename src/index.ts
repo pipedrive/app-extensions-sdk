@@ -1,4 +1,4 @@
-import { detectIdentifier, detectIframeFocus } from './utils';
+import { detectIdentifier, detectIframeFocus, detectUserSettings } from './utils';
 import {
 	Command,
 	CommandResponse,
@@ -12,6 +12,7 @@ import {
 	Payload,
 	TrackingEvent,
 	PageStateResponse,
+	UserSettings,
 } from './types';
 
 const commandKeys = Object.values(Command);
@@ -21,13 +22,15 @@ class AppExtensionsSDK {
 	private readonly identifier: string;
 	private initialized: boolean;
 	private window: Window;
+	public userSettings: UserSettings;
 
 	constructor(options: Options = {}) {
-		const { identifier, targetWindow } = options;
+		const { identifier, targetWindow, userSettings } = options;
 
 		this.initialized = false;
 		this.window = targetWindow ?? window.parent;
 		this.identifier = identifier ?? detectIdentifier();
+		this.userSettings = userSettings ?? detectUserSettings();
 
 		if (!this.identifier) {
 			throw new Error('Missing custom UI identifier');

@@ -1,6 +1,15 @@
+export enum UserSettingsTheme {
+	dark = 'dark',
+	light = 'light',
+}
+export type UserSettings = {
+	theme: UserSettingsTheme;
+};
+
 export type Options = {
 	identifier?: string;
 	targetWindow?: Window;
+	userSettings?: UserSettings;
 };
 
 export enum Command {
