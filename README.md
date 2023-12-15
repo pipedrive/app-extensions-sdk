@@ -99,6 +99,8 @@ document.documentElement.setAttribute('data-theme', sdk.userSettings.theme);
 await sdk.initialize();
 ```
 
+See also [USER_SETTINGS_CHANGE](#user-settings-change) event to implement an immediate update of styles in case of user preference change.
+
 ## Commands
 
 Commands can be invoked with the `execute` method. On successful command execution, promise
