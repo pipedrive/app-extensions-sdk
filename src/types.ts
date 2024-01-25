@@ -22,6 +22,7 @@ export enum Event {
 	VISIBILITY = 'visibility',
 	CLOSE_CUSTOM_MODAL = 'close_custom_modal',
 	PAGE_VISIBILITY_STATE = 'page_visibility_state',
+	USER_SETTINGS_CHANGE = 'user_settings_change',
 }
 
 export enum MessageType {
@@ -132,6 +133,15 @@ export enum VisibilityEventInvoker {
 	COMMAND = 'command',
 }
 
+export enum UserSettingsTheme {
+	DARK = 'dark',
+	LIGHT = 'light',
+}
+
+export type UserSettings = {
+	theme: UserSettingsTheme;
+};
+
 export type Args<T extends Command> = {
 	[Command.INITIALIZE]: InitializationOptions;
 	[Command.SHOW_SNACKBAR]: {
@@ -199,6 +209,9 @@ export type EventResponse<T extends Event> = {
 		[Event.CLOSE_CUSTOM_MODAL]: void;
 		[Event.PAGE_VISIBILITY_STATE]: {
 			state: 'visible' | 'hidden';
+		};
+		[Event.USER_SETTINGS_CHANGE]: {
+			theme: UserSettingsTheme;
 		};
 	}[T];
 };

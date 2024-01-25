@@ -9,6 +9,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
 ## Table of contents
 
 - [Initialization](#initialization)
+- [User settings](#user-settings)
 - [Commands](#commands)
   - [Show snackbar](#show-snackbar)
   - [Show confirmation dialog](#show-confirmation-dialog)
@@ -24,6 +25,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
 - [Events](#events)
   - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
+  - [User settings change](#user-settings-change)
 
 ## Initialization
 
@@ -66,6 +68,38 @@ After this, the global `AppExtensionsSDK` will be available. Initialization can 
   </script>
 </body>
 ```
+
+## User settings
+
+Contains an object with user settings, such as theme interface preference, and is accessible directly as a property of an instance of `AppExtensionsSDK`.
+
+**Properties**
+
+| Parameter  | Type   | Description                                                                                    |
+|------------| ------ |------------------------------------------------------------------------------------------------|
+| theme      | String | Selected theme interface preference. Possible values:<br/><ul><li>light</li><li>dark</li></ul> |
+
+### Example
+
+`sdk.userSettings.theme` can be used to set `data-theme` attribute to `html` tag of the iframe page with specific CSS for different themes.
+
+```css
+[data-theme="dark"] body {
+    // custom CSS for dark theme
+}
+```
+
+```javascript
+import AppExtensionsSDK from '@pipedrive/app-extensions-sdk';
+
+const sdk = new AppExtensionsSDK();
+
+document.documentElement.setAttribute('data-theme', sdk.userSettings.theme);
+
+await sdk.initialize();
+```
+
+See also [USER_SETTINGS_CHANGE](#user-settings-change) event to implement an immediate update of styles in case of user preference change.
 
 ## Commands
 
@@ -541,6 +575,24 @@ Subscribe to custom modal events that are triggered by this SDK's `CLOSE_MODAL` 
 ```javascript
 sdk.listen(Event.CLOSE_CUSTOM_MODAL, () => {
   // handle event
+});
+```
+
+### User settings change
+
+This event lets you get an update if any user settings have changed.
+
+**Response**
+
+| Parameter   | Type    | Description                                                                                        |
+|-------------|---------|----------------------------------------------------------------------------------------------------|
+| theme       | String  | The selected theme interface preference. Possible values:<br/><ul><li>light</li><li>dark</li></ul> |
+
+**Example**
+
+```javascript
+sdk.listen(Event.USER_SETTINGS_CHANGE, ({ data }) => {
+  // handle data
 });
 ```
 

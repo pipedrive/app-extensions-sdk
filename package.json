@@ -9,7 +9,7 @@
   "files": [
     "dist"
   ],
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Client SDK for Pipedrive app extensions",
   "scripts": {
     "test": "jest --passWithNoTests",

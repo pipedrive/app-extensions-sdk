@@ -1,3 +1,5 @@
+import { UserSettings, UserSettingsTheme } from './types';
+
 type Callback = () => void;
 
 export function detectIframeFocus(cb: Callback) {
@@ -19,4 +21,12 @@ export function detectIdentifier() {
 	const params = new URLSearchParams(window.location.search);
 
 	return params.get('id');
+}
+
+export function detectUserSettings(): UserSettings {
+	const params = new URLSearchParams(window.location.search);
+
+	return {
+		theme: params.get('theme') === UserSettingsTheme.DARK ? UserSettingsTheme.DARK : UserSettingsTheme.LIGHT,
+	};
 }

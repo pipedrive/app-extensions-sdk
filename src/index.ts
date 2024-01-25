@@ -1,4 +1,4 @@
-import { detectIdentifier, detectIframeFocus } from './utils';
+import { detectIdentifier, detectIframeFocus, detectUserSettings } from './utils';
 import {
 	Command,
 	CommandResponse,
@@ -9,9 +9,10 @@ import {
 	MessageChannelCommandResponse,
 	MessageType,
 	Options,
+	PageStateResponse,
 	Payload,
 	TrackingEvent,
-	PageStateResponse,
+	UserSettings,
 } from './types';
 
 const commandKeys = Object.values(Command);
@@ -21,6 +22,7 @@ class AppExtensionsSDK {
 	private readonly identifier: string;
 	private initialized: boolean;
 	private window: Window;
+	public userSettings: UserSettings;
 
 	constructor(options: Options = {}) {
 		const { identifier, targetWindow } = options;
@@ -28,6 +30,7 @@ class AppExtensionsSDK {
 		this.initialized = false;
 		this.window = targetWindow ?? window.parent;
 		this.identifier = identifier ?? detectIdentifier();
+		this.userSettings = detectUserSettings();
 
 		if (!this.identifier) {
 			throw new Error('Missing custom UI identifier');
@@ -126,6 +129,10 @@ class AppExtensionsSDK {
 			}
 
 			onEventReceived(data);
+
+			if (event === Event.USER_SETTINGS_CHANGE && data) {
+				this.userSettings = data as UserSettings;
+			}
 		};
 
 		this.window.postMessage(message, '*', [channel.port2]);
