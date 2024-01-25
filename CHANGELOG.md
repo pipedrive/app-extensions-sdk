@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.10.0] - 2024-01-25
+
 ### Added
 - Public `userSettings` property with current theme preference
 - New event `USER_SETTINGS_CHANGE` to detect an update of `userSettings` on the change
