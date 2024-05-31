@@ -1,0 +1,3 @@
+DEFAULT_NODE_VERSION = '16'
+NODE_VERSIONS = ['16']
+return this
