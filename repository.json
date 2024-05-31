@@ -1,7 +1,7 @@
 {
   "name": "app-extensions-sdk",
   "description": "Client SDK for Pipedrive app extensions",
-  "owner": "GRAVITY",
+  "owner": "Gravity",
   "type": "library",
   "status": "released"
 }
