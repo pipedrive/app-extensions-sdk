@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Migrate publish flow from Jenkins to GitHub Actions
+- Fix Owner name
+
 ## [0.10.2] - 2024-05-31
 
 ## [0.10.1] - 2024-04-02
