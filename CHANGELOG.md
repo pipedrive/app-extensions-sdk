@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Migrate publish flow from Jenkins to GitHub Actions
-- Fix Owner name
+- Add devops-tooling as owner for .github/workflows/cicd_*
 
 ## [0.10.2] - 2024-05-31
 
