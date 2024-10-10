@@ -9,7 +9,7 @@
   "files": [
     "dist"
   ],
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "Client SDK for Pipedrive app extensions",
   "scripts": {
     "test": "jest --passWithNoTests",
@@ -49,5 +49,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "tslib": "^2.4.0",
     "typescript": "^4.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
