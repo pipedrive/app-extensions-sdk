@@ -22,6 +22,7 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
   - [Hide floating window](#hide-floating-window)
   - [Set notification](#set-notification)
   - [Set focus mode](#set-focus-mode)
+  - [Get metadata](#get-metadata)
 - [Events](#events)
   - [Visibility](#visibility)
   - [Close custom modal](#close-custom-modal)
@@ -516,6 +517,23 @@ visible before using this command.
 
 ```javascript
 await sdk.execute(Command.SET_FOCUS_MODE, true);
+```
+
+### Get metadata
+
+Retrieves metadata information about the main window.
+
+**Response**
+
+| Parameter    | Type   | Description                     | Notes |
+|--------------|--------|---------------------------------|-------|
+| windowHeight | Number | Height of the main window (px). |       |
+| windowWidth  | Number | Width of the main window (px).  |       |
+
+**Example**
+
+```javascript
+const { windowWidth, windowHeight } = await sdk.execute(Command.GET_METADATA);
 ```
 
 ## Events
