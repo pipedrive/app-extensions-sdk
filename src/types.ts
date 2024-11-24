@@ -144,9 +144,9 @@ export type UserSettings = {
 };
 
 export type Metadata = {
-	windowHeight: number,
-	windowWidth: number,
-}
+	windowHeight: number;
+	windowWidth: number;
+};
 
 export type Args<T extends Command> = {
 	[Command.INITIALIZE]: InitializationOptions;
@@ -199,7 +199,7 @@ export type CommandResponse<T extends Command> = {
 	[Command.HIDE_FLOATING_WINDOW]: void;
 	[Command.SET_NOTIFICATION]: void;
 	[Command.SET_FOCUS_MODE]: void;
-	[Command.GET_METADATA]: Metadata,
+	[Command.GET_METADATA]: Metadata;
 }[T];
 
 export type MessageChannelCommandResponse<T extends Command> = {
