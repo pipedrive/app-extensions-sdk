@@ -16,6 +16,7 @@ export enum Command {
 	HIDE_FLOATING_WINDOW = 'hide_floating_window',
 	SET_NOTIFICATION = 'set_notification',
 	SET_FOCUS_MODE = 'set_focus_mode',
+	GET_METADATA = 'get_metadata',
 }
 
 export enum Event {
@@ -142,6 +143,11 @@ export type UserSettings = {
 	theme: UserSettingsTheme;
 };
 
+export type Metadata = {
+	windowHeight: number;
+	windowWidth: number;
+};
+
 export type Args<T extends Command> = {
 	[Command.INITIALIZE]: InitializationOptions;
 	[Command.SHOW_SNACKBAR]: {
@@ -170,6 +176,7 @@ export type Args<T extends Command> = {
 		number?: number;
 	};
 	[Command.SET_FOCUS_MODE]: boolean;
+	[Command.GET_METADATA]: void;
 }[T];
 
 export type CommandResponse<T extends Command> = {
@@ -192,6 +199,7 @@ export type CommandResponse<T extends Command> = {
 	[Command.HIDE_FLOATING_WINDOW]: void;
 	[Command.SET_NOTIFICATION]: void;
 	[Command.SET_FOCUS_MODE]: void;
+	[Command.GET_METADATA]: Metadata;
 }[T];
 
 export type MessageChannelCommandResponse<T extends Command> = {
