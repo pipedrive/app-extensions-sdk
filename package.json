@@ -3,8 +3,8 @@
   "main": "./dist/index.js",
   "typing": "dist/index",
   "devEngines": {
-    "node": "^16",
-    "npm": "^8"
+    "node": "^20",
+    "npm": "^10"
   },
   "files": [
     "dist"
