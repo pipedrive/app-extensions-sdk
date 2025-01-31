@@ -24,6 +24,7 @@ export enum Event {
 	CLOSE_CUSTOM_MODAL = 'close_custom_modal',
 	PAGE_VISIBILITY_STATE = 'page_visibility_state',
 	USER_SETTINGS_CHANGE = 'user_settings_change',
+	VIEW_SETTINGS = 'view_settings',
 }
 
 export enum MessageType {
@@ -221,6 +222,9 @@ export type EventResponse<T extends Event> = {
 		[Event.USER_SETTINGS_CHANGE]: {
 			theme: UserSettingsTheme;
 		};
+		[Event.VIEW_SETTINGS]: {
+			context?: Record<string, unknown>;
+		}
 	}[T];
 };
 
