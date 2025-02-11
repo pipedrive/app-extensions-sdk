@@ -245,6 +245,7 @@ export enum View {
 export type RedirectAttributes = {
 	view: View;
 	id?: number | string;
+	context?: Partial<Record<string, unknown>>;
 };
 
 export type PageStateResponse = {
