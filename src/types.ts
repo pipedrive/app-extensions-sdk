@@ -143,6 +143,8 @@ export type UserSettings = {
 	theme: UserSettingsTheme;
 };
 
+export type RedirectContext = Record<string, unknown>;
+
 export type Metadata = {
 	windowHeight: number;
 	windowWidth: number;
@@ -245,7 +247,7 @@ export enum View {
 export type RedirectAttributes = {
 	view: View;
 	id?: number | string;
-	context?: Partial<Record<string, unknown>>;
+	context?: Record<string, unknown>;
 };
 
 export type PageStateResponse = {

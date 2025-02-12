@@ -10,7 +10,7 @@ import {
 	MessageType,
 	Options,
 	PageStateResponse,
-	Payload,
+	Payload, RedirectContext,
 	TrackingEvent,
 	UserSettings,
 } from './types';
@@ -22,7 +22,9 @@ class AppExtensionsSDK {
 	private readonly identifier: string;
 	private initialized: boolean;
 	private window: Window;
+	private _redirectContext: RedirectContext;
 	public userSettings: UserSettings;
+
 
 	constructor(options: Options = {}) {
 		const { identifier, targetWindow } = options;
@@ -31,6 +33,7 @@ class AppExtensionsSDK {
 		this.window = targetWindow ?? window.parent;
 		this.identifier = identifier ?? detectIdentifier();
 		this.userSettings = detectUserSettings();
+		this._redirectContext = {};
 
 		if (!this.identifier) {
 			throw new Error('Missing custom UI identifier');
@@ -156,6 +159,14 @@ class AppExtensionsSDK {
 		this.initialized = true;
 
 		return this;
+	}
+
+	public get redirectContext(): RedirectContext {
+		return this._redirectContext;
+	}
+
+	public set redirectContext(context: RedirectContext) {
+		this._redirectContext = context;
 	}
 }
 
