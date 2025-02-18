@@ -143,8 +143,6 @@ export type UserSettings = {
 	theme: UserSettingsTheme;
 };
 
-export type RedirectContext = Record<string, unknown>;
-
 export type Metadata = {
 	windowHeight: number;
 	windowWidth: number;
