@@ -437,7 +437,7 @@ Redirects user to specified view.
 **Example**
 
 ```javascript
-await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1 });
+await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1, context: { foo: 'bar' } });
 ```
 
 ### Show floating window
