@@ -432,12 +432,12 @@ Redirects user to specified view.
 |-----------| ------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | view      | View          | View where the user will be redirected to                                                                                                             | required<br/><br/>Supported views:<br/>View.DEALS<br/>View.LEADS<br/>View.ORGANIZATIONS<br/>View.CONTACTS<br/>View.CAMPAIGNS<br/>View.PROJECTS<br/>View.SETTINGS - redirects to [custom settings page](https://pipedrive.readme.io/docs/custom-ui-extensions-app-settings) |
 | id        | String/Number | ID of the entity where the user will be redirected. If not provided, the user will be redirected to list view that's specified by the `view` property | optional                                                                                                                                                                                                                                                          |
-| context   | Partial<Record<string, unknown>>| Allows to pass a context in query params when redirecting to custom settings                                                                          | optional<br/>Supported views:<br/>View.SETTINGS                                                                                                                                                                                           |
+| context   | Object | Allows to pass a context object in query params when redirecting to custom settings                                                                          | optional<br/>Supported views:<br/>View.SETTINGS                                                                                                                                                                                           |
 
 **Example**
 
 ```javascript
-await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1 });
+await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1, context: { foo: 'bar' } });
 ```
 
 ### Show floating window
