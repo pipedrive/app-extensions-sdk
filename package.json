@@ -2,9 +2,17 @@
   "name": "@pipedrive/app-extensions-sdk",
   "main": "./dist/index.js",
   "typing": "dist/index",
-  "engines": {
-    "node": ">=16",
-    "npm": ">=8"
+  "devEngines": {
+	"runtime": {
+      "name": "node",
+      "version": ">=16",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=8",
+      "onFail": "error"
+    }
   },
   "files": [
     "dist"
