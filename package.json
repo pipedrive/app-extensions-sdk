@@ -3,7 +3,7 @@
   "main": "./dist/index.js",
   "typing": "dist/index",
   "devEngines": {
-	"runtime": {
+    "runtime": {
       "name": "node",
       "version": ">=16",
       "onFail": "error"
