@@ -6,7 +6,8 @@
     "lib": ["dom", "es2017", "es2018"],
     "target": "ES2016",
     "module": "esnext",
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["dist"]
