@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- upgraded rollup 2.79.2 -> 2.80.0 by npm audit fix
+- upgraded minimatch 3.1.2 -> 3.1.3 by npm audit fix
+- upgraded minimatch 3.1.2 -> 3.1.4 by npm audit fix
+
 ## [0.13.1] - 2025-09-24
 
 ### Fixed
