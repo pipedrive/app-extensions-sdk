@@ -1,68 +1,66 @@
 {
-	"name": "@pipedrive/app-extensions-sdk",
-	"main": "./dist/index.js",
-	"typing": "dist/index",
-	"devEngines": {
-		"runtime": {
-			"name": "node",
-			"version": ">=20",
-			"onFail": "error"
-		},
-		"packageManager": {
-			"name": "npm",
-			"version": ">=8",
-			"onFail": "error"
-		}
-	},
-	"files": [
-		"dist"
-	],
-	"version": "0.14.0",
-	"description": "Client SDK for Pipedrive app extensions",
-	"scripts": {
-		"test": "jest --passWithNoTests",
-		"coverage": "npm test -- --coverage",
-		"prepublish": "npm run build",
-		"build": "rollup -c",
-		"lint:eslint": "eslint '**/*.{js,jsx,ts,tsx}'",
-		"lint:tsc": "tsc --noEmit",
-		"lint": "npm run lint:tsc && npm run lint:eslint",
-		"format": "prettier --write '**/*.{js,jsx,ts,tsx,json,yml}' && eslint --fix '**/*.{js,jsx,ts,tsx}'",
-		"version": "changelog-updater && git add CHANGELOG.md",
-		"watch": "rollup --watch -c",
-		"prepare": "husky install && npm run build",
-		"watch:sync": "npm-utils watch"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/pipedrive/app-extensions-sdk.git"
-	},
-	"author": "",
-	"license": "SEE LICENSE IN LICENSE.md",
-	"bugs": {
-		"url": "https://github.com/pipedrive/app-extensions-sdk/issues"
-	},
-	"homepage": "https://github.com/pipedrive/app-extensions-sdk#readme",
-	"devDependencies": {
-		"@rollup/plugin-terser": "^1.0.0",
-		"@rollup/plugin-typescript": "^12.3.0",
-		"@typescript-eslint/eslint-plugin": "^8.57.0",
-		"@typescript-eslint/parser": "^8.57.0",
-		"changelog-updater": "^2.0.2",
-		"eslint": "^9.39.4",
-		"eslint-plugin-import": "^2.32.0",
-		"husky": "^9.1.7",
-		"jest": "^30.3.0",
-		"jest-environment-jsdom": "^30.3.0",
-		"prettier": "^3.8.1",
-		"rollup": "^4.59.0",
-		"tslib": "^2.8.1",
-		"typescript": "^5.9.3"
-	},
-	"overrides": {
-		"minimatch": "^10.2.1"
-	},
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "@pipedrive/app-extensions-sdk",
+  "main": "./dist/index.js",
+  "typing": "dist/index",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=20",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=8",
+      "onFail": "error"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "version": "0.14.0",
+  "description": "Client SDK for Pipedrive app extensions",
+  "scripts": {
+    "test": "jest --passWithNoTests",
+    "coverage": "npm test -- --coverage",
+    "prepublish": "npm run build",
+    "build": "rollup -c",
+    "lint:eslint": "eslint '**/*.{js,jsx,ts,tsx}'",
+    "lint:tsc": "tsc --noEmit",
+    "lint": "npm run lint:tsc && npm run lint:eslint",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,yml}' && eslint --fix '**/*.{js,jsx,ts,tsx}'",
+    "version": "changelog-updater && git add CHANGELOG.md",
+    "watch": "rollup --watch -c",
+    "watch:sync": "npm-utils watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipedrive/app-extensions-sdk.git"
+  },
+  "author": "",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/pipedrive/app-extensions-sdk/issues"
+  },
+  "homepage": "https://github.com/pipedrive/app-extensions-sdk#readme",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "changelog-updater": "^2.0.2",
+    "eslint": "^9.39.4",
+    "eslint-plugin-import": "^2.32.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "prettier": "^3.8.1",
+    "rollup": "^4.59.0",
+    "@rollup/plugin-terser": "^1.0.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "minimatch": "^10.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
