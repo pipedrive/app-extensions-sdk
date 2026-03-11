@@ -30,6 +30,7 @@
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,yml}' && eslint --fix '**/*.{js,jsx,ts,tsx}'",
     "version": "changelog-updater && git add CHANGELOG.md",
     "watch": "rollup --watch -c",
+	"prepare": "husky install && npm run build",
     "watch:sync": "npm-utils watch"
   },
   "repository": {
@@ -49,6 +50,7 @@
     "changelog-updater": "^2.0.2",
     "eslint": "^9.39.4",
     "eslint-plugin-import": "^2.32.0",
+	"husky": "^7.0.4",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
     "prettier": "^3.8.1",
