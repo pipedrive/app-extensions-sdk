@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- upgraded picomatch 2.3.1 -> 2.3.2 by npm audit fix
+- upgraded picomatch 4.0.3 -> 4.0.4 by npm audit fix
+
 ## [0.15.1] - 2026-04-28
 
 ### Fixed
