@@ -15,5 +15,4 @@ jobs:
     with:
       revision: ${{ github.event.pull_request.head.ref }}
       supported_versions: '[22]'
-      use_trusted_publisher: true
     secrets: inherit
