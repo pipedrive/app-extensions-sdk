@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.16.1] - 2026-08-25
+
+### Changed
+- Document `GET_SIGNED_TOKEN` cached token behavior in README
+
 ## [0.16.0] - 2026-05-22
 
 ## [0.15.1] - 2026-04-28

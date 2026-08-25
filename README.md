@@ -212,6 +212,10 @@ JWT can be used to ensure that the custom UI extension is loaded by Pipedrive. I
 requests and be verified on the server side. As JWT expires in 5 minutes, you can use this command
 to get a new one.
 
+If the previously issued token for the extension hasn't expired yet, calling this command again
+returns that same cached token instead of generating a new one. This means calling it repeatedly
+in a short time span is safe and won't produce a different token each time.
+
 **Response**
 
 | Parameter | Type   | Description | Notes |
