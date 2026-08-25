@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Document `GET_SIGNED_TOKEN` cached token behavior in README
+
 ### Fixed
 - Fix dependency vulnerabilities
 
