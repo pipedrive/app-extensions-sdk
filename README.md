@@ -402,7 +402,7 @@ const { token } = await sdk.execute(Command.GET_SIGNED_TOKEN);
 
 #### Open modal
 
-Opens a [JSON modal](#json-modal), [custom modal](#custom-modal) or a new
+Opens a [JSON modal](#json-modal-action), [custom modal](#custom-modal) or a new
 Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal),
 [Person](#new-person-modal) or [Activity](#new-activity-modal) modal
 

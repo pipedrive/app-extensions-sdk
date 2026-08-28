@@ -56,3 +56,8 @@ Notes for future doc reconciliation passes:
   trivially via `--passWithNoTests`. Don't let README/CLAUDE docs imply real test coverage exists until it does.
 - `npm run watch:sync` shells out to an `npm-utils` CLI that is not a listed `devDependency` — likely internal
   tooling; flag as "Needs verification" rather than assuming it works for external contributors.
+- Verify every `[text](#anchor)` link's fragment against the real heading slug it targets, not just that the
+  target heading exists somewhere. The README carried a broken link for at least several releases —
+  `[JSON modal](#json-modal)` in the "Open modal" intro pointed at a heading literally titled "JSON modal
+  action" (slug `#json-modal-action`) — because the link text and heading text quietly drifted apart. Fixed in
+  the `b4ce00d`+ doc restructure; re-check this class of bug (link text ≠ heading text) on future passes.
