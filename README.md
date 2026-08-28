@@ -8,27 +8,70 @@ Learn more about custom UI extensions from [Developer documentation](https://pip
 
 ## Table of contents
 
-- [Initialization](#initialization)
-- [User settings](#user-settings)
-- [Commands](#commands)
-  - [Show snackbar](#show-snackbar)
-  - [Show confirmation dialog](#show-confirmation-dialog)
-  - [Resize](#resize)
-  - [Get signed token](#get-signed-token)
-  - [Open modal](#open-modal)
-  - [Close modal](#close-modal)
-  - [Redirect to](#redirect-to)
-  - [Show floating window](#show-floating-window)
-  - [Hide floating window](#hide-floating-window)
-  - [Set notification](#set-notification)
-  - [Set focus mode](#set-focus-mode)
-  - [Get metadata](#get-metadata)
-- [Events](#events)
-  - [Visibility](#visibility)
-  - [Close custom modal](#close-custom-modal)
-  - [User settings change](#user-settings-change)
+- [Overview](#overview)
+- [Setup](#setup)
+  - [Prerequisites](#prerequisites)
+  - [Install](#install)
+  - [Initialization](#initialization)
+  - [Without module bundler](#without-module-bundler)
+  - [User settings](#user-settings)
+  - [Building from source](#building-from-source)
+  - [Common pitfalls](#common-pitfalls)
+- [Testing](#testing)
+  - [Unit tests](#unit-tests)
+  - [Coverage](#coverage)
+  - [Linting and formatting](#linting-and-formatting)
+  - [Troubleshooting](#troubleshooting)
+- [Architecture](#architecture)
+  - [Directory layout](#directory-layout)
+  - [Stack](#stack)
+  - [Communication flow](#communication-flow)
+  - [CI/CD](#cicd)
+- [Endpoints (Commands & Events)](#endpoints-commands--events)
+  - [Commands](#commands)
+    - [Show snackbar](#show-snackbar)
+    - [Show confirmation dialog](#show-confirmation-dialog)
+    - [Resize](#resize)
+    - [Get signed token](#get-signed-token)
+    - [Open modal](#open-modal)
+    - [Close modal](#close-modal)
+    - [Redirect to](#redirect-to)
+    - [Show floating window](#show-floating-window)
+    - [Hide floating window](#hide-floating-window)
+    - [Set notification](#set-notification)
+    - [Set focus mode](#set-focus-mode)
+    - [Get metadata](#get-metadata)
+  - [Events](#events)
+    - [Visibility](#visibility)
+    - [Close custom modal](#close-custom-modal)
+    - [User settings change](#user-settings-change)
+    - [Page visibility state](#page-visibility-state)
+- [References/Links](#referenceslinks)
 
-## Initialization
+## Overview
+
+`@pipedrive/app-extensions-sdk` is a small client-side TypeScript library that runs inside the iframe of a
+Pipedrive custom UI extension (panel, modal, or floating window). It lets that extension talk to the parent
+Pipedrive window — issuing **commands** (resize, open a modal, show a snackbar, redirect, etc.) and subscribing
+to **events** (visibility changes, user settings changes, page visibility state). There is no server component;
+the entire implementation lives under [`src/`](./src) and ships as a plain npm package.
+
+## Setup
+
+### Prerequisites
+
+- Node.js `>=22` and npm `>=8` (enforced via `devEngines` in `package.json`). `.nvmrc` pins Node `24` for local
+  development.
+- These prerequisites only matter if you're building/contributing to this SDK itself. Consumers who just install
+  the published package via npm or the CDN don't need to match this Node version.
+
+### Install
+
+```
+npm install --save @pipedrive/app-extensions-sdk
+```
+
+### Initialization
 
 In order to display a custom UI extension to a user, this SDK has to be initialized.
 In the iframe request, query `id` attribute is passed, which has to be provided to the SDK constructor.
@@ -70,7 +113,7 @@ After this, the global `AppExtensionsSDK` will be available. Initialization can 
 </body>
 ```
 
-## User settings
+### User settings
 
 Contains an object with user settings, such as theme interface preference, and is accessible directly as a property of an instance of `AppExtensionsSDK`.
 
@@ -80,7 +123,7 @@ Contains an object with user settings, such as theme interface preference, and i
 |------------| ------ |------------------------------------------------------------------------------------------------|
 | theme      | String | Selected theme interface preference. Possible values:<br/><ul><li>light</li><li>dark</li></ul> |
 
-### Example
+#### Example
 
 `sdk.userSettings.theme` can be used to set `data-theme` attribute to `html` tag of the iframe page with specific CSS for different themes.
 
@@ -100,9 +143,138 @@ document.documentElement.setAttribute('data-theme', sdk.userSettings.theme);
 await sdk.initialize();
 ```
 
-See also [USER_SETTINGS_CHANGE](#user-settings-change) event to implement an immediate update of styles in case of user preference change.
+See also [User settings change](#user-settings-change) event to implement an immediate update of styles in case of user preference change.
 
-## Commands
+### Building from source
+
+Only needed if you're contributing to this SDK, not for consuming the published package.
+
+```
+git clone git@github.com:pipedrive/app-extensions-sdk.git
+cd app-extensions-sdk
+npm install
+npm run build   # compiles src/ with Rollup into dist/ (CJS dist/index.js + UMD dist/index.umd.js)
+npm run watch   # same, but in Rollup watch mode while you iterate
+```
+
+A Husky `pre-commit` hook automatically runs `npm run format && npm run lint` on every commit — see
+[Linting and formatting](#linting-and-formatting).
+
+### Common pitfalls
+
+- **`execute()` throws `SDK is not initialized`** — you must `await sdk.initialize()` before calling
+  `sdk.execute(...)`.
+- **Constructor throws `Missing custom UI identifier`** — the SDK could not read `?id=` from the URL and no
+  `identifier` was passed manually. This typically happens after a redirect that strips query params; pass
+  `identifier` explicitly in that case (see [Initialization](#initialization)).
+- **CDN version pinning** — never omit the version in the jsDelivr URL in production (e.g. use
+  `@pipedrive/app-extensions-sdk@0`, not an unpinned path); see [Without module bundler](#without-module-bundler).
+- **Pre-commit hook** — `npm run format && npm run lint` runs automatically via Husky; don't bypass it with
+  `--no-verify`.
+- **`npm run watch:sync`** invokes an external `npm-utils` CLI that isn't listed in this repo's
+  `devDependencies` — **Needs verification** (assumed to be internal Pipedrive tooling not available to external
+  contributors; safe to ignore `watch:sync` for regular `build`/`watch` workflows).
+
+## Testing
+
+### Unit tests
+
+Jest is configured (`jest.config.js`) with a `jsdom` test environment. New tests belong in a `__tests__/`
+directory colocated with the code under test (e.g. `src/__tests__/index.test.ts`) — `testRegex` only picks up
+`__tests__/*.test.[tj]s`, not colocated `*.test.ts` files next to source.
+
+```
+npm test
+```
+
+This runs `jest --passWithNoTests`. **Needs verification / heads-up:** there are currently no test files in
+`src/`, so this command passes trivially (exit code 0) with zero tests executed — it does not yet verify any
+actual behavior.
+
+There is no separate functional/e2e test suite in this repository — the only testing harness currently
+configured is the Jest unit-test setup described above.
+
+### Coverage
+
+```
+npm run coverage
+```
+
+Runs `npm test -- --coverage`. Coverage thresholds in `jest.config.js` are currently all set to `0`, so nothing
+is enforced yet — add real thresholds once test coverage exists.
+
+### Linting and formatting
+
+```
+npm run lint     # tsc --noEmit, then ESLint over **/*.{js,jsx,ts,tsx}
+npm run format   # Prettier --write, then eslint --fix
+```
+
+These are the effective correctness gate today (in place of enforced test coverage) and also run automatically
+on every commit via the Husky `pre-commit` hook.
+
+### Troubleshooting
+
+- `npm test` reporting success with "no tests found" is expected until test files are added under a
+  `__tests__/` directory — it is not a false positive, it's the `--passWithNoTests` flag doing its job.
+- If a new test file isn't picked up by Jest, check it matches `__tests__/*.test.ts` (or `.js`), per
+  `testRegex` in `jest.config.js`.
+- Lint failures on commit come from the Husky `pre-commit` hook running `npm run format && npm run lint`; run
+  those two commands locally to reproduce and fix before committing.
+
+## Architecture
+
+### Directory layout
+
+```
+src/
+  index.ts   — AppExtensionsSDK class: postMessage()/execute() for commands, listen() for events
+  types.ts   — Command/Event enums and the Args<T>/CommandResponse<T> mapped types (protocol source of truth)
+  utils.ts   — DOM-dependent helpers: detectIdentifier, detectUserSettings, detectIframeFocus
+  umd.ts     — separate Rollup entry point exporting AppExtensionsSDK with enums as static properties (for <script> tag usage)
+dist/        — build output (CJS dist/index.js, UMD dist/index.umd.js) — generated, not committed source
+```
+
+### Stack
+
+- **TypeScript**, compiled via Rollup (`rollup.config.mjs`) using `@rollup/plugin-typescript`.
+- Two build outputs: CJS (`dist/index.js`) and UMD (`dist/index.umd.js`, minified with `@rollup/plugin-terser`)
+  for `<script>`-tag consumers.
+- **Jest** + `jest-environment-jsdom` for unit tests (see [Testing](#testing)).
+- **ESLint** + **Prettier** for linting/formatting, enforced locally via a **Husky** `pre-commit` hook.
+- No server component and no runtime dependencies beyond the browser's own `postMessage`/`MessageChannel` and
+  `document.visibilitychange` APIs — this is purely a client-side library.
+
+### Communication flow
+
+The SDK never talks to a backend directly; it talks to the parent Pipedrive window that's hosting the
+extension's iframe:
+
+- **Commands** (`sdk.execute(Command.X, ...)`) — `postMessage()` opens a `MessageChannel`, posts
+  `{ payload, id: identifier }` to the parent window (`window.parent` by default), and resolves/rejects the
+  returned promise based on the response received on `channel.port1`.
+- **Events** (`sdk.listen(Event.X, cb)`) — for most events, `listen()` sets up a `MessageChannel`-based
+  subscription with the parent window (e.g. `USER_SETTINGS_CHANGE`, which also updates `sdk.userSettings` as a
+  side effect). `PAGE_VISIBILITY_STATE` is the one exception: it's backed by a native
+  `document.visibilitychange` listener and never leaves the iframe.
+- Every `Command`/`Event` is a discriminated union keyed off the enums in `src/types.ts`, so the wire protocol
+  is defined in one place and changes there surface as type errors everywhere else that needs updating.
+
+### CI/CD
+
+- `.github/workflows/on-commit.yml` — runs `npm install` + `npm run lint` on every PR targeting `master`.
+- `.github/workflows/cicd_npm-publish.yml` — publishes to npm (via OIDC Trusted Publisher) when a PR is labeled
+  `npm-ready-for-publish`.
+
+## Endpoints (Commands & Events)
+
+This SDK has no HTTP endpoints — its public API surface is the set of **Commands** you invoke with
+`sdk.execute()` and **Events** you subscribe to with `sdk.listen()`, both exchanged with the parent window over
+`postMessage` (see [Communication flow](#communication-flow)). This section documents each one — think of a
+Command as a "route" (its purpose, parameters, and response), and note [Get signed token](#get-signed-token) for
+the one built-in authentication-related capability.
+
+### Commands
 
 Commands can be invoked with the `execute` method. On successful command execution, promise
 resolves. On error, it rejects.
@@ -123,7 +295,7 @@ try {
 }
 ```
 
-### Show snackbar
+#### Show snackbar
 
 Shows snackbar with provided message and link
 
@@ -148,7 +320,7 @@ await sdk.execute(Command.SHOW_SNACKBAR, {
 });
 ```
 
-### Show confirmation dialog
+#### Show confirmation dialog
 
 Shows confirmation dialog with provided title and description
 
@@ -177,7 +349,7 @@ const { confirmed } = await sdk.execute(Command.SHOW_CONFIRMATION, {
 });
 ```
 
-### Resize
+#### Resize
 
 Resizes custom UI extension with provided height and width
 
@@ -202,7 +374,7 @@ The minimum width is 200px and the maximum width is 800px.
 await sdk.execute(Command.RESIZE, { height: 500 });
 ```
 
-### Get signed token
+#### Get signed token
 
 A new JSON Web Token (JWT) that is valid for 5 minutes will be generated. It can be verified using
 the JWT secret which you can add from Marketplace Manager when configuring a custom UI extension. If it's not
@@ -228,13 +400,13 @@ in a short time span is safe and won't produce a different token each time.
 const { token } = await sdk.execute(Command.GET_SIGNED_TOKEN);
 ```
 
-### Open modal
+#### Open modal
 
 Opens a [JSON modal](#json-modal), [custom modal](#custom-modal) or a new
 Pipedrive [Deal](#new-deal-modal), [Organization](#new-organization-modal),
 [Person](#new-person-modal) or [Activity](#new-activity-modal) modal
 
-### JSON modal action
+##### JSON modal action
 
 **Parameters for JSON modal**
 
@@ -258,7 +430,7 @@ const { status } = await sdk.execute(Command.OPEN_MODAL, {
 });
 ```
 
-### Custom modal
+##### Custom modal
 
 **Parameters for custom modal**
 
@@ -286,7 +458,7 @@ const { status } = await sdk.execute(Command.OPEN_MODAL, {
 });
 ```
 
-### New deal modal
+##### New deal modal
 
 **Parameters for new deal modal**
 
@@ -316,7 +488,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 });
 ```
 
-### New person modal
+##### New person modal
 
 **Parameters for new person modal**
 
@@ -346,7 +518,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 });
 ```
 
-### New organization modal
+##### New organization modal
 
 **Parameters for new organization modal**
 
@@ -374,7 +546,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 });
 ```
 
-### New activity modal
+##### New activity modal
 
 **Parameters for new activity modal**
 
@@ -416,7 +588,7 @@ const { status, id } = await sdk.execute(Command.OPEN_MODAL, {
 });
 ```
 
-### Close modal
+#### Close modal
 
 Closes an active modal window; applicable only for **custom modal**.
 
@@ -426,7 +598,7 @@ Closes an active modal window; applicable only for **custom modal**.
 await sdk.execute(Command.CLOSE_MODAL);
 ```
 
-### Redirect to
+#### Redirect to
 
 Redirects user to specified view.
 
@@ -444,7 +616,7 @@ Redirects user to specified view.
 await sdk.execute(Command.REDIRECT_TO, { view: View.DEALS, id: 1, context: { foo: 'bar' } });
 ```
 
-### Show floating window
+#### Show floating window
 
 Opens floating window and triggers `Event.VISIBILITY` with an optional `context` parameter
 that is dependent on your app's use case (see [Visibility](#visibility) for details).
@@ -465,7 +637,7 @@ await sdk.execute(Command.SHOW_FLOATING_WINDOW, {
 });
 ```
 
-### Hide floating window
+#### Hide floating window
 
 Closes floating window and triggers `Event.VISIBILITY` with an optional `context` parameter
 that is dependent on your app's use case (see [Visibility](#visibility) for details).
@@ -486,7 +658,7 @@ await sdk.execute(Command.HIDE_FLOATING_WINDOW, {
 });
 ```
 
-### Set notification
+#### Set notification
 
 For apps with floating window, display or remove notifications badge in apps dock. Not specifying
 the number or setting it to `0` removes the notification badge. Specifying a number greater than `0`
@@ -506,7 +678,7 @@ await sdk.execute(Command.SET_NOTIFICATION, {
 });
 ```
 
-### Set focus mode
+#### Set focus mode
 
 For apps with a floating window, you can enable or disable focus mode. When the focus mode is
 enabled, the close button in the window header is hidden.
@@ -524,7 +696,7 @@ visible before using this command.
 await sdk.execute(Command.SET_FOCUS_MODE, true);
 ```
 
-### Get metadata
+#### Get metadata
 
 Retrieves metadata information about the main window.
 
@@ -541,7 +713,7 @@ Retrieves metadata information about the main window.
 const { windowWidth, windowHeight } = await sdk.execute(Command.GET_METADATA);
 ```
 
-## Events
+### Events
 
 Subscribe to events triggered by users.
 
@@ -554,17 +726,17 @@ const stopReceivingEvents = sdk.listen(event, ({ error, data }) => {
 stopReceivingEvents(); // Call this function to stop receiving events
 ```
 
-### Visibility
+#### Visibility
 
 Subscribe to visibility changes that are triggered by the user or an SDK command.
 
-#### Custom panel
+##### Custom panel
 
 Event is triggered when the user collapses or expands the panel.
 
 `context` parameter is not included.
 
-#### Floating window
+##### Floating window
 
 Event is triggered when the floating window is displayed or gets hidden.
 
@@ -587,7 +759,7 @@ sdk.listen(Event.VISIBILITY, ({ error, data }) => {
 });
 ```
 
-### Close custom modal
+#### Close custom modal
 
 Subscribe to custom modal events that are triggered by this SDK's `CLOSE_MODAL` command or user interaction with the custom modal.
 
@@ -601,7 +773,7 @@ sdk.listen(Event.CLOSE_CUSTOM_MODAL, () => {
 });
 ```
 
-### User settings change
+#### User settings change
 
 This event lets you get an update if any user settings have changed.
 
@@ -619,7 +791,7 @@ sdk.listen(Event.USER_SETTINGS_CHANGE, ({ data }) => {
 });
 ```
 
-### Page visibility state
+#### Page visibility state
 
 Subscribe to the page visibility event that is triggered when the value of the `visibilityState` property changes. This event enables you to find out if the page your app extension will be loaded in is visible/in the background or hidden.
 
@@ -644,3 +816,12 @@ const stopReceivingPageStateEvent = sdk.listen(Event.PAGE_VISIBILITY_STATE, ({ d
 
 stopReceivingPageStateEvent() // Call this function to stop receiving event
 ```
+
+## References/Links
+
+- [Custom UI extensions developer documentation](https://pipedrive.readme.io/docs/custom-ui-extensions)
+- [Custom settings page documentation](https://pipedrive.readme.io/docs/custom-ui-extensions-app-settings) (see [View.SETTINGS](#redirect-to))
+- [jsDelivr CDN build](https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0/dist/index.umd.js) (see [Without module bundler](#without-module-bundler))
+- [npm package](https://www.npmjs.com/package/@pipedrive/app-extensions-sdk)
+- [GitHub repository](https://github.com/pipedrive/app-extensions-sdk) / [issues](https://github.com/pipedrive/app-extensions-sdk/issues)
+- [CHANGELOG.md](./CHANGELOG.md)
