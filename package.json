@@ -31,7 +31,8 @@
     "version": "changelog-updater && git add CHANGELOG.md",
     "watch": "rollup --watch -c",
     "prepare": "husky install && npm run build",
-    "watch:sync": "npm-utils watch"
+    "watch:sync": "npm-utils watch",
+    "docs:ai": "claude --append-system-prompt-file .claude/prompts/readme-docs.md 'Update the repository documentation now.'"
   },
   "repository": {
     "type": "git",
