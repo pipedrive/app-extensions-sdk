@@ -187,9 +187,10 @@ directory colocated with the code under test (e.g. `src/__tests__/index.test.ts`
 npm test
 ```
 
-This runs `jest --passWithNoTests`. **Needs verification / heads-up:** there are currently no test files in
-`src/`, so this command passes trivially (exit code 0) with zero tests executed — it does not yet verify any
-actual behavior.
+This runs `jest --passWithNoTests`. TypeScript is compiled by `jest.transform.js`, a small transformer built on
+the installed `typescript` package. The only test file so far, `src/__tests__/index.test.ts`, covers the
+`GET_METADATA` round trip with a fake `MessageChannel` standing in for the parent window; the rest of the SDK has
+no unit tests yet.
 
 There is no separate functional/e2e test suite in this repository — the only testing harness currently
 configured is the Jest unit-test setup described above.
@@ -215,8 +216,6 @@ on every commit via the Husky `pre-commit` hook.
 
 ### Troubleshooting
 
-- `npm test` reporting success with "no tests found" is expected until test files are added under a
-  `__tests__/` directory — it is not a false positive, it's the `--passWithNoTests` flag doing its job.
 - If a new test file isn't picked up by Jest, check it matches `__tests__/*.test.ts` (or `.js`), per
   `testRegex` in `jest.config.js`.
 - Lint failures on commit come from the Husky `pre-commit` hook running `npm run format && npm run lint`; run
@@ -698,19 +697,26 @@ await sdk.execute(Command.SET_FOCUS_MODE, true);
 
 #### Get metadata
 
-Retrieves metadata information about the main window.
+Retrieves metadata information about the main window and the page the user is on. The page is read
+when the command is executed, so a floating window opened after the user navigated gets where the
+user is now.
 
 **Response**
 
-| Parameter    | Type   | Description                     | Notes |
-|--------------|--------|---------------------------------|-------|
-| windowHeight | Number | Height of the main window (px). |       |
-| windowWidth  | Number | Width of the main window (px).  |       |
+| Parameter    | Type   | Description                                                | Notes                                                                                                                                                                                                  |
+|--------------|--------|------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| windowHeight | Number | Height of the main window (px).                            |                                                                                                                                                                                                        |
+| windowWidth  | Number | Width of the main window (px).                             |                                                                                                                                                                                                        |
+| page         | Object | Object detail page the user is on.                         | optional<br/><br/>Present only on object detail pages and omitted anywhere else.<br/>`view`: a `View` value (`View.DEALS`, `View.CONTACTS` for a person, `View.ORGANIZATIONS` or `View.LEADS`)<br/>`id`: String, the id of the object |
 
 **Example**
 
 ```javascript
-const { windowWidth, windowHeight } = await sdk.execute(Command.GET_METADATA);
+const { windowWidth, windowHeight, page } = await sdk.execute(Command.GET_METADATA);
+
+if (page) {
+  // e.g. { view: View.DEALS, id: '123' }
+}
 ```
 
 ### Events

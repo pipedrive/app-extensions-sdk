@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - `npm run build` — compile `src/` with Rollup into `dist/` (CJS `dist/index.js` + UMD `dist/index.umd.js`, both via `tsc`/rollup-typescript, UMD is minified with terser).
 - `npm run watch` — Rollup in watch mode.
-- `npm test` — run Jest (`--passWithNoTests`; there are currently no test files, though the harness is fully configured — see Testing below).
+- `npm test` — run Jest (`--passWithNoTests`; TypeScript is compiled by the custom `jest.transform.js` — see Testing below).
 - `npm run coverage` — Jest with coverage.
 - `npm run lint` — `tsc --noEmit` followed by ESLint over `**/*.{js,jsx,ts,tsx}`.
 - `npm run format` — Prettier write + `eslint --fix`.
@@ -52,8 +52,10 @@ Notes for future doc reconciliation passes:
   (e.g. `## Commands` → `### Commands`) does not break existing `#commands`-style links elsewhere.
 - `demo/`, `custom-modal-test/`, and `issue-63/` may exist locally but are untracked/gitignored scratch dirs, not
   part of the repository — do not reference them in `README.md` or treat them as documented structure.
-- There are currently no test files anywhere in `src/` despite Jest being fully configured; `npm test` passes
-  trivially via `--passWithNoTests`. Don't let README/CLAUDE docs imply real test coverage exists until it does.
+- The only test file is `src/__tests__/index.test.ts` (the `GET_METADATA` round trip against a fake
+  `MessageChannel`); the rest of `src/` is untested. Don't let README/CLAUDE docs imply broader coverage than that.
+- `jest.transform.js` replaces `ts-jest`, which the internal npm proxy blocked (403). `tsconfig.build.json` keeps
+  `src/__tests__` out of the Rollup build so test declarations never reach `dist`; `tsc --noEmit` still checks them.
 - `npm run watch:sync` shells out to an `npm-utils` CLI that is not a listed `devDependency` — likely internal
   tooling; flag as "Needs verification" rather than assuming it works for external contributors.
 - Verify every `[text](#anchor)` link's fragment against the real heading slug it targets, not just that the
