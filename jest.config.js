@@ -1,5 +1,8 @@
 module.exports = {
 	testEnvironment: 'jsdom',
+	transform: {
+		'^.+\\.tsx?$': '<rootDir>/jest.transform.js',
+	},
 	collectCoverageFrom: ['src/**/*.ts'],
 	coverageThreshold: {
 		global: {

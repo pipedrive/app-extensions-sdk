@@ -13,7 +13,7 @@ export default [
 				exports: 'named',
 			},
 		],
-		plugins: [typescript({ tsconfig: './tsconfig.json' })],
+		plugins: [typescript({ tsconfig: './tsconfig.build.json' })],
 	},
 	{
 		input: 'src/umd.ts',
@@ -27,6 +27,6 @@ export default [
 				plugins: [terser()],
 			},
 		],
-		plugins: [typescript({ tsconfig: './tsconfig.json' })],
+		plugins: [typescript({ tsconfig: './tsconfig.build.json' })],
 	},
 ];

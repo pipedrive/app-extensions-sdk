@@ -143,9 +143,15 @@ export type UserSettings = {
 	theme: UserSettingsTheme;
 };
 
+export type PageContext = {
+	view: View;
+	id: string;
+};
+
 export type Metadata = {
 	windowHeight: number;
 	windowWidth: number;
+	page?: PageContext;
 };
 
 export type Args<T extends Command> = {

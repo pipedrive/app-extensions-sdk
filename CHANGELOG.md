@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- `GET_METADATA` returns an optional `page` (`{ view, id }`) with the object detail page the user is on
+
 ## [0.16.1] - 2026-08-25
 
 ### Changed
